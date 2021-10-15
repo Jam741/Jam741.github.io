@@ -61,7 +61,7 @@ var settings = {
     f5_factor: 0.5,
 }
 
-let circlePrint, rectanglePint, linePint, arrowPint,diamondPint;
+let circlePrint, rectanglePint, linePint, arrowPint, diamondPint;
 
 let font;
 let c;
@@ -84,6 +84,7 @@ function saveAsCanvas() {
 }
 
 function setup() {
+
     c = createCanvas(innerWidth, innerHeight);
 
     circlePrint = new CirclePint();
@@ -158,7 +159,7 @@ addEventListener('resize', () => {
     resizeCanvas(innerWidth, innerHeight)
 });
 
-gui.add(settings, "type", ["圆形", "矩形", "线", "箭头","菱形"]).name("形状")
+gui.add(settings, "type", ["圆形", "矩形", "线", "箭头", "菱形"]).name("形状")
 let f1 = gui.addFolder("圆形参数");
 f1.add(settings, 'radius', 600, 1000).name("半径");
 f1.addColor(settings, 'bgColor').name("背景色");
@@ -215,7 +216,7 @@ f5.add(settings, "f5_rotateOpen", true).name("向心角度")
 f5.add(settings, "f5_factor", 0.1, 1).step(0.1).name("密度")
 
 
-function DiamondPint(){
+function DiamondPint() {
 
     this.x = innerWidth / 2;
     this.y = innerHeight / 2;
@@ -244,6 +245,7 @@ function DiamondPint(){
         this.contentColor = settings.f5_contentColor;
         this.contentSize = settings.f5_contentSize;
         this.contentSizeMax = settings.f5_contentSizeMax;
+        this.rotateOpen = settings.f5_rotateOpen;
         this.n = settings.f5_factor;
     }
 
@@ -270,11 +272,11 @@ function DiamondPint(){
 
         var r = (this.radius / 2);
 
-        var mjuli1 = dist(realMouseX,realMouseY,center1X,center1Y);
-        var mjuli2 = dist(realMouseX,realMouseY,center2X,center2Y);
-        var mjuli3 = dist(realMouseX,realMouseY,center3X,center3Y);
-        var mjuli4 = dist(realMouseX,realMouseY,center4X,center4Y);
-        if(mjuli1<r || mjuli2 < r || mjuli3 < r || mjuli4 < r){
+        var mjuli1 = dist(realMouseX, realMouseY, center1X, center1Y);
+        var mjuli2 = dist(realMouseX, realMouseY, center2X, center2Y);
+        var mjuli3 = dist(realMouseX, realMouseY, center3X, center3Y);
+        var mjuli4 = dist(realMouseX, realMouseY, center4X, center4Y);
+        if (mjuli1 < r || mjuli2 < r || mjuli3 < r || mjuli4 < r) {
             isInner = false;
         }
 
@@ -285,10 +287,10 @@ function DiamondPint(){
                 for (let j = -(this.radius / 2) - this.contentSizeMax; j < (this.radius / 2); j += this.contentSizeMax) {
                     let d = dist(0, 0, j, i);
 
-                    var juli1 = dist(j,i,center1X,center1Y);
-                    var juli2 = dist(j,i,center2X,center2Y);
-                    var juli3 = dist(j,i,center3X,center3Y);
-                    var juli4 = dist(j,i,center4X,center4Y);
+                    var juli1 = dist(j, i, center1X, center1Y);
+                    var juli2 = dist(j, i, center2X, center2Y);
+                    var juli3 = dist(j, i, center3X, center3Y);
+                    var juli4 = dist(j, i, center4X, center4Y);
 
                     if (d < this.radius / 2 && juli1 > r && juli2 > r && juli3 > r && juli4 > r) {
 
@@ -307,14 +309,22 @@ function DiamondPint(){
                             var bh = juli / qTotal * totalChangeSize / 2
                             var size = this.contentSize + bh;
                             if (size > maxQSiz) maxQSiz = size;
-                            displayText(this.getZM(), this.contentColor, size, j, i);
-
+                            if (this.rotateOpen) {
+                                var angle = atan2(realMouseY - i, realMouseX - j);
+                                displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
+                            } else {
+                                displayText(this.getZM(), this.contentColor, size, j, i);
+                            }
                         } else {
                             var hTotal = totalL * (1 - this.n);
                             var bh = (juli - (totalL * this.n)) / hTotal * totalChangeSize / 2 + (0.5 * totalChangeSize)
                             var size = this.contentSize + bh;
-                            displayText(this.getZM(), this.contentColor, size, j, i);
-                        }
+                            if (this.rotateOpen) {
+                                var angle = atan2(realMouseY - i, realMouseX - j);
+                                displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
+                            } else {
+                                displayText(this.getZM(), this.contentColor, size, j, i);
+                            }                        }
                     }
                 }
             }
@@ -339,10 +349,10 @@ function DiamondPint(){
                 for (let j = -(this.radius / 2) - this.contentSizeMax; j < (this.radius / 2); j += this.contentSizeMax) {
                     let d = dist(0, 0, j, i);
 
-                    var juli1 = dist(j,i,center1X,center1Y);
-                    var juli2 = dist(j,i,center2X,center2Y);
-                    var juli3 = dist(j,i,center3X,center3Y);
-                    var juli4 = dist(j,i,center4X,center4Y);
+                    var juli1 = dist(j, i, center1X, center1Y);
+                    var juli2 = dist(j, i, center2X, center2Y);
+                    var juli3 = dist(j, i, center3X, center3Y);
+                    var juli4 = dist(j, i, center4X, center4Y);
 
                     if (d < this.radius / 2 && juli1 > r && juli2 > r && juli3 > r && juli4 > r) {
 
@@ -362,14 +372,22 @@ function DiamondPint(){
                             var bh = juli / qTotal * totalChangeSize / 2
                             var size = this.contentSizeMax - bh;
                             if (size > maxQSiz) maxQSiz = size;
-                            displayText(this.getZM(), this.contentColor, size, j, i);
-
+                            if (this.rotateOpen) {
+                                var angle = atan2(realMouseY - i, realMouseX - j);
+                                displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
+                            } else {
+                                displayText(this.getZM(), this.contentColor, size, j, i);
+                            }
                         } else {
                             var hTotal = totalL * (1 - this.n);
                             var bh = (juli - (totalL * this.n)) / hTotal * totalChangeSize / 2 + (0.5 * totalChangeSize)
                             var size = this.contentSizeMax - bh;
-                            displayText(this.getZM(), this.contentColor, size, j, i);
-                        }
+                            if (this.rotateOpen) {
+                                var angle = atan2(realMouseY - i, realMouseX - j);
+                                displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
+                            } else {
+                                displayText(this.getZM(), this.contentColor, size, j, i);
+                            }                        }
                     }
                 }
             }
@@ -395,6 +413,7 @@ function ArrowPint() {
     this.contentSize = settings.f4_contentSize;
     this.contentSizeMax = settings.f4_contentSizeMax;
     this.n = settings.f4_factor;
+    this.rotateOpen = settings.f4_rotateOpen;
     this.charIndex = 0;
     let maxDistance = 0;
 
@@ -411,6 +430,7 @@ function ArrowPint() {
         this.contentColor = settings.f4_contentColor;
         this.contentSize = settings.f4_contentSize;
         this.contentSizeMax = settings.f4_contentSizeMax;
+        this.rotateOpen = settings.f4_rotateOpen;
         this.n = settings.f4_factor;
     }
 
@@ -474,27 +494,27 @@ function ArrowPint() {
         var mjuli3 = dist(center3x, center3y, mouseX, mouseY);
         var mjuli4 = dist(center4x, center4y, mouseX, mouseY);
         var isInner = false;
-        if(mouseY < y) {
+        if (mouseY < y) {
             if (mjuli1 >= this.mWidth / 2 && mjuli2 >= this.mWidth / 2) {
                 isInner = true;
             } else {
                 isInner = false;
             }
-        }else{
+        } else {
             if (mjuli3 <= (this.mWidth / 2) || mjuli4 <= (this.mWidth / 2)) {
                 isInner = true;
             } else {
                 isInner = false;
             }
         }
-        if(mouseX < center1x || mouseX > center2x){
+        if (mouseX < center1x || mouseX > center2x) {
             isInner = false;
         }
 
 
-        print("isInner : " +isInner);
-        if(isInner){
-            for (let i = y - this.mHeight / 2; i <= y + this.mHeight / 2; i += (this.contentSizeMax )) {
+        print("isInner : " + isInner);
+        if (isInner) {
+            for (let i = y - this.mHeight / 2; i <= y + this.mHeight / 2; i += (this.contentSizeMax)) {
                 this.charIndex = 0;
                 for (let k = x - this.mWidth / 2; k <= x + this.mWidth / 2; k += (this.contentSizeMax)) {
                     // let d = dist(this.x, this.y, k, i)
@@ -513,50 +533,66 @@ function ArrowPint() {
                     if (i < y) {
                         if (juli1 >= this.mWidth / 2 && juli2 >= this.mWidth / 2) {
                             //总长度
-                            var totalL = dist(mouseX,0,x,0) + (this.mWidth / 2)
+                            var totalL = dist(mouseX, 0, x, 0) + (this.mWidth / 2)
                             //变化差值
                             var totalChangeSize = this.contentSizeMax - this.contentSize;
 
-                            var juli = dist(k,0,mouseX,0);
+                            var juli = dist(k, 0, mouseX, 0);
 
                             if (juli < totalL * this.n) {
 
                                 var qTotal = totalL * this.n;
                                 var bh = juli / qTotal * totalChangeSize / 2
                                 var size = this.contentSize + bh;
-                                displayText(this.getZM(), this.contentColor, size, k, i);
-
+                                if (this.rotateOpen) {
+                                    var angle = atan2(mouseY - i, mouseX - k);
+                                    displayTextRotate(this.getZM(), this.contentColor, size, k, i, angle);
+                                } else {
+                                    displayText(this.getZM(), this.contentColor, size, k, i);
+                                }
                             } else {
                                 var hTotal = totalL * (1 - this.n);
                                 var bh = (juli - (totalL * this.n)) / hTotal * totalChangeSize / 2 + (0.5 * totalChangeSize)
                                 var size = this.contentSize + bh;
-                                displayText(this.getZM(), this.contentColor, size, k, i);
-                            }
+                                if (this.rotateOpen) {
+                                    var angle = atan2(mouseY - i, mouseX - k);
+                                    displayTextRotate(this.getZM(), this.contentColor, size, k, i, angle);
+                                } else {
+                                    displayText(this.getZM(), this.contentColor, size, k, i);
+                                }                            }
 
                         }
                     } else {
 
                         if (juli3 <= (this.mWidth / 2) || juli4 <= (this.mWidth / 2)) {
                             //总长度
-                            var totalL = dist(mouseX,0,x,0) + (this.mWidth / 2)
+                            var totalL = dist(mouseX, 0, x, 0) + (this.mWidth / 2)
                             //变化差值
                             var totalChangeSize = this.contentSizeMax - this.contentSize;
 
-                            var juli = dist(k,0,mouseX,0);
+                            var juli = dist(k, 0, mouseX, 0);
 
                             if (juli < totalL * this.n) {
 
                                 var qTotal = totalL * this.n;
                                 var bh = juli / qTotal * totalChangeSize / 2
                                 var size = this.contentSize + bh;
-                                displayText(this.getZM(), this.contentColor, size, k, i);
-
+                                if (this.rotateOpen) {
+                                    var angle = atan2(mouseY - i, mouseX - k);
+                                    displayTextRotate(this.getZM(), this.contentColor, size, k, i, angle);
+                                } else {
+                                    displayText(this.getZM(), this.contentColor, size, k, i);
+                                }
                             } else {
                                 var hTotal = totalL * (1 - this.n);
                                 var bh = (juli - (totalL * this.n)) / hTotal * totalChangeSize / 2 + (0.5 * totalChangeSize)
                                 var size = this.contentSize + bh;
-                                displayText(this.getZM(), this.contentColor, size, k, i);
-                            }
+                                if (this.rotateOpen) {
+                                    var angle = atan2(mouseY - i, mouseX - k);
+                                    displayTextRotate(this.getZM(), this.contentColor, size, k, i, angle);
+                                } else {
+                                    displayText(this.getZM(), this.contentColor, size, k, i);
+                                }                            }
 
                         }
 
@@ -565,8 +601,8 @@ function ArrowPint() {
 
             }
 
-        }else{
-            for (let i = y - this.mHeight / 2; i <= y + this.mHeight / 2; i += (this.contentSizeMax )) {
+        } else {
+            for (let i = y - this.mHeight / 2; i <= y + this.mHeight / 2; i += (this.contentSizeMax)) {
                 this.charIndex = 0;
                 for (let k = x - this.mWidth / 2; k <= x + this.mWidth / 2; k += (this.contentSizeMax)) {
                     // let d = dist(this.x, this.y, k, i)
@@ -587,36 +623,44 @@ function ArrowPint() {
                             //变化差值
                             var totalChangeSize = this.contentSizeMax - this.contentSize;
 
-                            var l = dist(mouseX,0,x,0);
+                            var l = dist(mouseX, 0, x, 0);
 
                             var bl = (l - (this.mWidth / 2)) / l;
 
 
-                            if(mouseX < center1x) {
-                                var dx = x -this.mWidth / 2 * bl;
-                            }else if(mouseX >= this.mWidth / 2){
+                            if (mouseX < center1x) {
+                                var dx = x - this.mWidth / 2 * bl;
+                            } else if (mouseX >= this.mWidth / 2) {
                                 var dx = x + this.mWidth / 2 * bl;
-                            }else{
+                            } else {
                                 dx = x;
                             }
 
                             //总长度
-                            var totalL = dist(dx,0,x,0) + (this.mWidth / 2)
-                            var juli = dist(k,0,dx,0);
+                            var totalL = dist(dx, 0, x, 0) + (this.mWidth / 2)
+                            var juli = dist(k, 0, dx, 0);
 
                             if (juli < totalL * this.n) {
 
                                 var qTotal = totalL * this.n;
                                 var bh = juli / qTotal * totalChangeSize / 2
                                 var size = this.contentSizeMax - bh;
-                                displayText(this.getZM(), this.contentColor, size, k, i);
-
+                                if (this.rotateOpen) {
+                                    var angle = atan2(mouseY - i, mouseX - k);
+                                    displayTextRotate(this.getZM(), this.contentColor, size, k, i, angle);
+                                } else {
+                                    displayText(this.getZM(), this.contentColor, size, k, i);
+                                }
                             } else {
                                 var hTotal = totalL * (1 - this.n);
                                 var bh = (juli - (totalL * this.n)) / hTotal * totalChangeSize / 2 + (0.5 * totalChangeSize)
                                 var size = this.contentSizeMax - bh;
-                                displayText(this.getZM(), this.contentColor, size, k, i);
-                            }
+                                if (this.rotateOpen) {
+                                    var angle = atan2(mouseY - i, mouseX - k);
+                                    displayTextRotate(this.getZM(), this.contentColor, size, k, i, angle);
+                                } else {
+                                    displayText(this.getZM(), this.contentColor, size, k, i);
+                                }                            }
 
                         }
                     } else {
@@ -625,35 +669,44 @@ function ArrowPint() {
                             //变化差值
                             var totalChangeSize = this.contentSizeMax - this.contentSize;
 
-                            var l = dist(mouseX,0,x,0);
+                            var l = dist(mouseX, 0, x, 0);
 
                             var bl = (l - (this.mWidth / 2)) / l;
 
 
-                            if(mouseX < center1x) {
-                                var dx = x -this.mWidth / 2 * bl;
-                            }else if(mouseX >= this.mWidth / 2){
+                            if (mouseX < center1x) {
+                                var dx = x - this.mWidth / 2 * bl;
+                            } else if (mouseX >= this.mWidth / 2) {
                                 var dx = x + this.mWidth / 2 * bl;
-                            }else{
+                            } else {
                                 dx = x;
                             }
 
                             //总长度
-                            var totalL = dist(dx,0,x,0) + (this.mWidth / 2)
-                            var juli = dist(k,0,dx,0);
+                            var totalL = dist(dx, 0, x, 0) + (this.mWidth / 2)
+                            var juli = dist(k, 0, dx, 0);
 
                             if (juli < totalL * this.n) {
 
                                 var qTotal = totalL * this.n;
                                 var bh = juli / qTotal * totalChangeSize / 2
                                 var size = this.contentSizeMax - bh;
-                                displayText(this.getZM(), this.contentColor, size, k, i);
-
+                                if (this.rotateOpen) {
+                                    var angle = atan2(mouseY - i, mouseX - k);
+                                    displayTextRotate(this.getZM(), this.contentColor, size, k, i, angle);
+                                } else {
+                                    displayText(this.getZM(), this.contentColor, size, k, i);
+                                }
                             } else {
                                 var hTotal = totalL * (1 - this.n);
                                 var bh = (juli - (totalL * this.n)) / hTotal * totalChangeSize / 2 + (0.5 * totalChangeSize)
                                 var size = this.contentSizeMax - bh;
-                                displayText(this.getZM(), this.contentColor, size, k, i);
+                                if (this.rotateOpen) {
+                                    var angle = atan2(mouseY - i, mouseX - k);
+                                    displayTextRotate(this.getZM(), this.contentColor, size, k, i, angle);
+                                } else {
+                                    displayText(this.getZM(), this.contentColor, size, k, i);
+                                }
                             }
 
 
@@ -683,7 +736,8 @@ function LinePint() {
     this.content = settings.f3_content;
     this.contentColor = settings.f3_contentColor;
     this.contentSize = settings.f3_contentSize;
-    this.contentSizeMax = settings.contentSizeMax;
+    this.contentSizeMax = settings.f3_contentSizeMax;
+    this.rotateOpen = settings.f3_rotateOpen;
     this.n = settings.f3_factor;
     this.charIndex = 0;
     let maxDistance = 0;
@@ -699,6 +753,8 @@ function LinePint() {
         this.content = settings.f3_content;
         this.contentColor = settings.f3_contentColor;
         this.contentSize = settings.f3_contentSize;
+        this.contentSizeMax = settings.f3_contentSizeMax;
+        this.rotateOpen = settings.f3_rotateOpen;
         this.n = settings.f3_factor;
     }
 
@@ -712,9 +768,9 @@ function LinePint() {
         var realMouseY = mouseY - (innerHeight / 2);
         // rect(x,y,this.mWidth,this.mHeight);
 
-        translate(innerWidth / 2 , innerHeight / 2);
+        translate(innerWidth / 2, innerHeight / 2);
 
-        var isInnerx = -(this.mWidth / 2) < realMouseX  && realMouseX < this.mWidth / 2 && -(this.mHeight / 2) < realMouseY && realMouseY < this.mHeight / 2;
+        var isInnerx = -(this.mWidth / 2) < realMouseX && realMouseX < this.mWidth / 2 && -(this.mHeight / 2) < realMouseY && realMouseY < this.mHeight / 2;
         print(isInnerx);
         if (isInnerx) {
             for (let i = -this.mHeight / 2 + this.contentSizeMax; i < this.mHeight / 2; i += this.contentSizeMax) {
@@ -732,19 +788,28 @@ function LinePint() {
                         var qTotal = totalL * this.n;
                         var bh = juli / qTotal * totalChangeSize / 2
                         var size = this.contentSize + bh;
-                        displayText(this.getZM(), this.contentColor, size, j, i);
-
+                        if (this.rotateOpen) {
+                            var angle = atan2(realMouseY - i, realMouseX - j);
+                            displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
+                        } else {
+                            displayText(this.getZM(), this.contentColor, size, j, i);
+                        }
                     } else {
                         var hTotal = totalL * (1 - this.n);
                         var bh = (juli - (totalL * this.n)) / hTotal * totalChangeSize / 2 + (0.5 * totalChangeSize)
                         var size = this.contentSize + bh;
-                        displayText(this.getZM(), this.contentColor, size, j, i);
+                        if (this.rotateOpen) {
+                            var angle = atan2(realMouseY - i, realMouseX - j);
+                            displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
+                        } else {
+                            displayText(this.getZM(), this.contentColor, size, j, i);
+                        }
                     }
 
                 }
             }
 
-        }else{
+        } else {
             for (let i = -this.mHeight / 2 + this.contentSizeMax; i < this.mHeight / 2; i += this.contentSizeMax) {
                 this.charIndex = 0;
                 for (let j = -this.mWidth / 2 + this.contentSizeMax; j < this.mWidth / 2; j += this.contentSizeMax) {
@@ -758,9 +823,9 @@ function LinePint() {
                     var bl = (l - (this.mWidth / 2)) / l;
 
 
-                    if(realMouseX < - this.mWidth / 2) {
+                    if (realMouseX < -this.mWidth / 2) {
                         var dx = -this.mWidth / 2 * bl;
-                    }else if(realMouseX >= this.mWidth / 2){
+                    } else if (realMouseX >= this.mWidth / 2) {
                         var dx = this.mWidth / 2 * bl;
                     }
 
@@ -782,13 +847,22 @@ function LinePint() {
                         var qTotal = totalL * this.n;
                         var bh = juli / qTotal * totalChangeSize / 2
                         var size = this.contentSizeMax - bh;
-                        displayText(this.getZM(), this.contentColor, size, j, i);
-
+                        if (this.rotateOpen) {
+                            var angle = atan2(realMouseY - i, realMouseX - j);
+                            displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
+                        } else {
+                            displayText(this.getZM(), this.contentColor, size, j, i);
+                        }
                     } else {
                         var hTotal = totalL * (1 - this.n);
                         var bh = (juli - (totalL * this.n)) / hTotal * totalChangeSize / 2 + (0.5 * totalChangeSize)
                         var size = this.contentSizeMax - bh;
-                        displayText(this.getZM(), this.contentColor, size, j, i);
+                        if (this.rotateOpen) {
+                            var angle = atan2(realMouseY - i, realMouseX - j);
+                            displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
+                        } else {
+                            displayText(this.getZM(), this.contentColor, size, j, i);
+                        }
                     }
                 }
             }
@@ -812,6 +886,7 @@ function RectanglePint() {
     this.contentColor = settings.f2_contentColor;
     this.contentSize = settings.f2_contentSize;
     this.contentSizeMax = settings.f2_contentSizeMax;
+    this.rotateOpen = settings.f2_rotateOpen;
     this.n = settings.f2_factor;
     this.charIndex = 0;
     let maxDistance = 0;
@@ -832,6 +907,7 @@ function RectanglePint() {
         this.contentColor = settings.f2_contentColor;
         this.contentSize = settings.f2_contentSize;
         this.contentSizeMax = settings.f2_contentSizeMax;
+        this.rotateOpen = settings.f2_rotateOpen;
         this.n = settings.f2_factor;
     }
 
@@ -848,7 +924,7 @@ function RectanglePint() {
 
         translate(this.x, this.y);
 
-        var isInnerx = -(this.mWidth / 2) < realMouseX  && realMouseX < this.mWidth / 2 && -(this.mHeight / 2) < realMouseY && realMouseY < this.mHeight / 2;
+        var isInnerx = -(this.mWidth / 2) < realMouseX && realMouseX < this.mWidth / 2 && -(this.mHeight / 2) < realMouseY && realMouseY < this.mHeight / 2;
         if (isInnerx) {
             for (let i = -this.mHeight / 2 + this.contentSizeMax; i < this.mHeight / 2; i += this.contentSizeMax) {
                 this.charIndex = 0;
@@ -909,17 +985,26 @@ function RectanglePint() {
                     }
                     if (juli < totalL * this.n) {
 
-                            var qTotal = totalL * this.n;
-                            var bh = juli / qTotal * totalChangeSize / 2
-                            var size = this.contentSize + bh;
-                            displayText(this.getZM(), this.contentColor, size, j, i);
-
+                        var qTotal = totalL * this.n;
+                        var bh = juli / qTotal * totalChangeSize / 2
+                        var size = this.contentSize + bh;
+                        if (this.rotateOpen) {
+                            var angle = atan2(realMouseY - i, realMouseX - j);
+                            displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
                         } else {
-                            var hTotal = totalL * (1 - this.n);
-                            var bh = (juli - (totalL * this.n)) / hTotal * totalChangeSize / 2 + (0.5 * totalChangeSize)
-                            var size = this.contentSize + bh;
                             displayText(this.getZM(), this.contentColor, size, j, i);
                         }
+                    } else {
+                        var hTotal = totalL * (1 - this.n);
+                        var bh = (juli - (totalL * this.n)) / hTotal * totalChangeSize / 2 + (0.5 * totalChangeSize)
+                        var size = this.contentSize + bh;
+                        if (this.rotateOpen) {
+                            var angle = atan2(realMouseY - i, realMouseX - j);
+                            displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
+                        } else {
+                            displayText(this.getZM(), this.contentColor, size, j, i);
+                        }
+                    }
 
                 }
             }
@@ -943,44 +1028,64 @@ function RectanglePint() {
                 for (let j = -this.mWidth / 2 + this.contentSizeMax; j < this.mWidth / 2; j += this.contentSizeMax) {
 
 
+                    if (j / i >= this.mWidth / this.mHeight) {
 
 
-
-
-                    if(j / i >= this.mWidth / this.mHeight){
-
-                        var xx = 1/2 * this.mWidth;
+                        var xx = this.mWidth / 2;
                         var yy = xx * realMouseY / realMouseX;
+
                         var bl = (l - (this.mWidth / 2)) / l;
 
-                        if(realMouseX > this.mWidth / 2){
-                            if(j / i >= this.mWidth / this.mHeight){
+                        if (realMouseX > this.mWidth / 2) {
+                            if (j / i >= this.mWidth / this.mHeight) {
                                 minX = xx * bl;
                                 minY = yy * bl;
                             }
-                        }else if(realMouseX < -this.mWidth / 2){
-                            if(j / i >= this.mWidth / this.mHeight){
-                                minX =  -xx * bl;
+                        } else if (realMouseX < -this.mWidth / 2) {
+                            if (j / i >= this.mWidth / this.mHeight) {
+                                minX = -xx * bl;
                                 minY = yy * bl;
                             }
                         }
 
-                    }else{
+                    }
 
-                        var yy = 1/2 * this.mHeight;
+                        // else if(j / i == this.mWidth / this.mHeight){
+                        //
+                        //     var xx = this.mWidth /2;
+                        //     var yy = xx * realMouseY / realMouseX;
+                        //
+                        //     var bl = this.mWidth / this.mHeight;
+                        //
+                        //     if(realMouseX > this.mWidth / 2){
+                        //         if(j / i >= this.mWidth / this.mHeight){
+                        //             minX = xx * bl;
+                        //             minY = yy * bl;
+                        //         }
+                        //     }else if(realMouseX < -this.mWidth / 2){
+                        //         if(j / i >= this.mWidth / this.mHeight){
+                        //             minX =  -xx * bl;
+                        //             minY = yy * bl;
+                        //         }
+                        //     }
+                        // }
+                    //
+
+                    else {
+
+                        var yy = 1 / 2 * this.mHeight;
                         var xx = yy * realMouseX / realMouseY;
 
                         var bl = (l - (this.mHeight / 2)) / l;
                         print(this.mHeight / 2);
-                        if(realMouseY > this.mHeight / 2){
-                            if(j / i < this.mWidth / this.mHeight){
+                        if (realMouseY > this.mHeight / 2) {
+                            if (j / i < this.mWidth / this.mHeight) {
                                 minX = xx * bl;
                                 minY = yy * bl;
                             }
-                        }
-                        else if(realMouseY < - this.mHeight / 2){
-                            if(j / i < this.mWidth / this.mHeight){
-                                minX =  xx * bl;
+                        } else if (realMouseY < -this.mHeight / 2) {
+                            if (j / i < this.mWidth / this.mHeight) {
+                                minX = xx * bl;
                                 minY = -yy * bl;
 
                             }
@@ -1007,19 +1112,28 @@ function RectanglePint() {
                         juli = dist(xD, yD, minX, minY);
 
                         //
-                        // if (juli < totalL * this.n) {
-                        //
-                        //     var qTotal = totalL * this.n;
-                        //     var bh = juli / qTotal * totalChangeSize / 2
-                        //     var size = this.contentSize + bh;
-                        //     displayText("X", this.contentColor, size, j, i);
-                        //
-                        // } else {
-                        //     var hTotal = totalL * (1 - this.n);
-                        //     var bh = (juli - (totalL * this.n)) / hTotal * totalChangeSize / 2 + (0.5 * totalChangeSize)
-                        //     var size = this.contentSize + bh;
-                        //     displayText("X", '#00FF00', size, j, i);
-                        // }
+                        if (juli < totalL * this.n) {
+
+                            var qTotal = totalL * this.n;
+                            var bh = juli / qTotal * totalChangeSize / 2
+                            var size = this.contentSize + bh;
+                            if (this.rotateOpen) {
+                                var angle = atan2(realMouseY - i, realMouseX - j);
+                                displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
+                            } else {
+                                displayText(this.getZM(), this.contentColor, size, j, i);
+                            }
+                        } else {
+                            var hTotal = totalL * (1 - this.n);
+                            var bh = (juli - (totalL * this.n)) / hTotal * totalChangeSize / 2 + (0.5 * totalChangeSize)
+                            var size = this.contentSize + bh;
+                            if (this.rotateOpen) {
+                                var angle = atan2(realMouseY - i, realMouseX - j);
+                                displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
+                            } else {
+                                displayText(this.getZM(), this.contentColor, size, j, i);
+                            }
+                        }
                     } else {
                         // yD = i - realMouseY;
                         yD = i;
@@ -1028,33 +1142,42 @@ function RectanglePint() {
                         juli = dist(xD, yD, minX, minY);
 
                         // //
-                        // if (juli < totalL * this.n) {
-                        //
-                        //     var qTotal = totalL * this.n;
-                        //     var bh = juli / qTotal * totalChangeSize / 2
-                        //     var size = this.contentSize + bh;
-                        //     displayText("X", this.contentColor, size, j, i);
-                        //
-                        // } else {
-                        //     var hTotal = totalL * (1 - this.n);
-                        //     var bh = (juli - (totalL * this.n)) / hTotal * totalChangeSize / 2 + (0.5 * totalChangeSize)
-                        //     var size = this.contentSize + bh;
-                        //     displayText("X", '#0000FF', size, j, i);
-                        // }
-                    }
-                    if (juli < totalL * this.n) {
+                        if (juli < totalL * this.n) {
 
-                        var qTotal = totalL * this.n;
-                        var bh = juli / qTotal * totalChangeSize / 2
-                        var size = this.contentSize + bh;
-                        displayText(this.getZM(), this.contentColor, size, j, i);
-
-                    } else {
-                        var hTotal = totalL * (1 - this.n);
-                        var bh = (juli - (totalL * this.n)) / hTotal * totalChangeSize / 2 + (0.5 * totalChangeSize)
-                        var size = this.contentSize + bh;
-                        displayText(this.getZM(), this.contentColor, size, j, i);
+                            var qTotal = totalL * this.n;
+                            var bh = juli / qTotal * totalChangeSize / 2
+                            var size = this.contentSize + bh;
+                            if (this.rotateOpen) {
+                                var angle = atan2(realMouseY - i, realMouseX - j);
+                                displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
+                            } else {
+                                displayText(this.getZM(), this.contentColor, size, j, i);
+                            }
+                        } else {
+                            var hTotal = totalL * (1 - this.n);
+                            var bh = (juli - (totalL * this.n)) / hTotal * totalChangeSize / 2 + (0.5 * totalChangeSize)
+                            var size = this.contentSize + bh;
+                            if (this.rotateOpen) {
+                                var angle = atan2(realMouseY - i, realMouseX - j);
+                                displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
+                            } else {
+                                displayText(this.getZM(), this.contentColor, size, j, i);
+                            }
+                        }
                     }
+                    // if (juli < totalL * this.n) {
+                    //
+                    //     var qTotal = totalL * this.n;
+                    //     var bh = juli / qTotal * totalChangeSize / 2
+                    //     var size = this.contentSize + bh;
+                    //     displayText(this.getZM(), this.contentColor, size, j, i);
+                    //
+                    // } else {
+                    //     var hTotal = totalL * (1 - this.n);
+                    //     var bh = (juli - (totalL * this.n)) / hTotal * totalChangeSize / 2 + (0.5 * totalChangeSize)
+                    //     var size = this.contentSize + bh;
+                    //     displayText(this.getZM(), this.contentColor, size, j, i);
+                    // }
 
                 }
             }
@@ -1114,10 +1237,10 @@ function CirclePint() {
         isInner = d < this.radius / 2;
 
         translate(this.x, this.y);
-
         var realMouseX = mouseX - (innerWidth / 2);
         var realMouseY = mouseY - (innerHeight / 2);
         print("this.rotateOpen:" + this.rotateOpen);
+
         if (isInner) {
 
             for (let i = -(this.radius / 2) - this.contentSizeMax; i < (this.radius / 2); i += this.contentSizeMax) {
@@ -1141,11 +1264,11 @@ function CirclePint() {
                             var bh = juli / qTotal * totalChangeSize / 2
                             var size = this.contentSize + bh;
                             if (size > maxQSiz) maxQSiz = size;
-                            if(this.rotateOpen){
-                                var angle = atan2(Math.abs(realMouseY - i), Math.abs(realMouseX - j));
+                            if (this.rotateOpen) {
+                                var angle = atan2(realMouseY - i, realMouseX - j);
                                 print("angle: " + angle);
-                                displayTextRotate(this.getZM(), this.contentColor, size, j, i,angle);
-                            }else {
+                                displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
+                            } else {
                                 displayText(this.getZM(), this.contentColor, size, j, i);
                             }
 
@@ -1153,10 +1276,10 @@ function CirclePint() {
                             var hTotal = totalL * (1 - this.n);
                             var bh = (juli - (totalL * this.n)) / hTotal * totalChangeSize / 2 + (0.5 * totalChangeSize)
                             var size = this.contentSize + bh;
-                            if(this.rotateOpen){
-                                var angle = tan(Math.abs(realMouseY - i) / juli);
-                                displayTextRotate(this.getZM(), this.contentColor, size, j, i,angle);
-                            }else {
+                            if (this.rotateOpen) {
+                                var angle = atan2(realMouseY - i, realMouseX - j);
+                                displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
+                            } else {
                                 displayText(this.getZM(), this.contentColor, size, j, i);
                             }
                         }
@@ -1201,20 +1324,20 @@ function CirclePint() {
                             var bh = juli / qTotal * totalChangeSize / 2
                             var size = this.contentSizeMax - bh;
                             if (size > maxQSiz) maxQSiz = size;
-                            if(this.rotateOpen){
-                                var angle = tan(Math.abs(realMouseY - i) / juli);
-                                displayTextRotate(this.getZM(), this.contentColor, size, j, i,angle);
-                            }else {
+                            if (this.rotateOpen) {
+                                var angle = atan2(realMouseY - i, realMouseX - j);
+                                displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
+                            } else {
                                 displayText(this.getZM(), this.contentColor, size, j, i);
                             }
                         } else {
                             var hTotal = totalL * (1 - this.n);
                             var bh = (juli - (totalL * this.n)) / hTotal * totalChangeSize / 2 + (0.5 * totalChangeSize)
                             var size = this.contentSizeMax - bh;
-                            if(this.rotateOpen){
-                                var angle = tan(Math.abs(realMouseY - i) / juli);
-                                displayTextRotate(this.getZM(), this.contentColor, size, j, i,angle);
-                            }else {
+                            if (this.rotateOpen) {
+                                var angle = atan2(realMouseY - i, realMouseX - j);
+                                displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
+                            } else {
                                 displayText(this.getZM(), this.contentColor, size, j, i);
                             }
                         }
@@ -1240,13 +1363,13 @@ function displayText(s, color, size, x, y) {
 }
 
 
-function displayTextRotate(s, color, size, x, y,angle) {
+function displayTextRotate(s, color, size, x, y, angle) {
     push();
     fill(color);
     textFont(font);
     textSize(size);
-    text(s, x, y);
-    translate(x,y);
-    rotate(PI / 2);
+    translate(x, y);
+    rotate(angle);
+    text(s, 0, 0);
     pop();
 }
