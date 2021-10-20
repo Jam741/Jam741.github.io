@@ -9,6 +9,7 @@ var settings = {
     animate: false,
     speed: 0.01,
     number: 1,
+    midu:1,
     // fillColor: '#FFFFFF',
     bgColor: '#000000',
     content: 'SOBEY',
@@ -28,6 +29,7 @@ var settings = {
     f2_contentSizeMax: 24,
     f2_rotateOpen: false,
     f2_factor: 0.5,
+    f2_midu: 1,
 
     f3_type: '线',
     f3_bgColor: '#000000',
@@ -39,6 +41,7 @@ var settings = {
     f3_contentSizeMax: 24,
     f3_rotateOpen: false,
     f3_factor: 0.5,
+    f3_midu: 1,
 
     f4_type: '箭头',
     f4_bgColor: '#000000',
@@ -49,6 +52,7 @@ var settings = {
     f4_contentSizeMax: 24,
     f4_rotateOpen: false,
     f4_factor: 0.5,
+    f4_midu: 1,
 
     f5_type: '菱形',
     f5_bgColor: '#000000',
@@ -59,6 +63,8 @@ var settings = {
     f5_contentSizeMax: 24,
     f5_rotateOpen: false,
     f5_factor: 0.5,
+    f5_midu: 1,
+
 }
 
 let circlePrint, rectanglePint, linePint, arrowPint, diamondPint;
@@ -168,6 +174,7 @@ f1.addColor(settings, "contentColor").name("文本颜色")
 f1.add(settings, "contentSize", 2, 14).step(1).name("最小子体")
 f1.add(settings, "contentSizeMax", 16, 80).step(1).name("最大字体")
 f1.add(settings, "factor", 0.1, 1).step(0.1).name("强度")
+f1.add(settings, "midu", 1, 100).step(1).name("密度")
 f1.add(settings, "rotateOpen", true).name("向心角度")
 f1.open();
 
@@ -179,8 +186,9 @@ f2.add(settings, "f2_content").name("文本")
 f2.addColor(settings, "f2_contentColor").name("文本颜色")
 f2.add(settings, "f2_contentSize", 1, 80).step(1).name("最小子体")
 f2.add(settings, "f2_contentSizeMax", 16, 80).step(1).name("最大字体")
-f2.add(settings, "f2_rotateOpen", true).name("向心角度")
 f2.add(settings, "f2_factor", 0.1, 1).step(0.1).name("强度")
+f2.add(settings, "f2_midu", 1, 100).step(1).name("密度")
+f2.add(settings, "f2_rotateOpen", true).name("向心角度")
 
 // f2.open()
 
@@ -192,8 +200,9 @@ f3.add(settings, "f3_content").name("文本")
 f3.addColor(settings, "f3_contentColor").name("文本颜色")
 f3.add(settings, "f3_contentSize", 1, 80).step(1).name("最小子体")
 f3.add(settings, "f3_contentSizeMax", 16, 80).step(1).name("最大字体")
-f3.add(settings, "f3_rotateOpen", true).name("向心角度")
 f3.add(settings, "f3_factor", 0.1, 1).step(0.1).name("强度")
+f3.add(settings, "f3_midu", 1, 100).step(1).name("密度")
+f3.add(settings, "f3_rotateOpen", true).name("向心角度")
 
 let f4 = gui.addFolder("箭头")
 f4.addColor(settings, "f4_bgColor").name("背景色")
@@ -202,8 +211,9 @@ f4.add(settings, "f4_content").name("文本")
 f4.addColor(settings, "f4_contentColor").name("文本颜色")
 f4.add(settings, "f4_contentSize", 1, 80).step(1).name("最小子体")
 f4.add(settings, "f4_contentSizeMax", 16, 80).step(1).name("最大字体")
-f4.add(settings, "f4_rotateOpen", true).name("向心角度")
 f4.add(settings, "f4_factor", 0.1, 1).step(0.1).name("强度")
+f4.add(settings, "f4_midu", 1, 100).step(1).name("密度")
+f4.add(settings, "f4_rotateOpen", true).name("向心角度")
 
 let f5 = gui.addFolder("菱形")
 f5.addColor(settings, "f4_bgColor").name("背景色")
@@ -212,8 +222,10 @@ f5.add(settings, "f5_content").name("文本")
 f5.addColor(settings, "f5_contentColor").name("文本颜色")
 f5.add(settings, "f5_contentSize", 1, 80).step(1).name("最小子体")
 f5.add(settings, "f5_contentSizeMax", 16, 80).step(1).name("最大字体")
-f5.add(settings, "f5_rotateOpen", true).name("向心角度")
 f5.add(settings, "f5_factor", 0.1, 1).step(0.1).name("强度")
+f5.add(settings, "f5_midu", 1, 100).step(1).name("密度")
+f5.add(settings, "f5_rotateOpen", true).name("向心角度")
+
 
 
 function DiamondPint() {
@@ -227,6 +239,7 @@ function DiamondPint() {
     this.contentSize = 6;
     this.contentSizeMax = 24;
     this.n = 0.5;
+    this.midu = settings.f5_midu;
     this.charIndex = 0;
     let maxDistance = 0;
     let isInner = false;
@@ -247,6 +260,7 @@ function DiamondPint() {
         this.contentSizeMax = settings.f5_contentSizeMax;
         this.rotateOpen = settings.f5_rotateOpen;
         this.n = settings.f5_factor;
+        this.midu = settings.f5_midu;
     }
 
     this.display = function () {
@@ -261,7 +275,7 @@ function DiamondPint() {
         var realMouseX = mouseX - (innerWidth / 2);
         var realMouseY = mouseY - (innerHeight / 2);
 
-        var pyl = this.radius / 50;
+        var pyl = this.radius / 25;
         var center1X = -(this.radius / 2) - pyl;
         var center1Y = -(this.radius / 2) - pyl;
         var center2X = (this.radius / 2) + pyl;
@@ -283,9 +297,9 @@ function DiamondPint() {
 
         if (isInner) {
 
-            for (let i = -(this.radius / 2) - this.contentSizeMax; i < (this.radius / 2); i += this.contentSizeMax) {
+            for (let i = -(this.radius / 2) - this.contentSizeMax; i < (this.radius / 2); i += this.contentSizeMax + this.midu) {
                 this.charIndex = 0;
-                for (let j = -(this.radius / 2) - this.contentSizeMax; j < (this.radius / 2); j += this.contentSizeMax) {
+                for (let j = -(this.radius / 2) - this.contentSizeMax; j < (this.radius / 2); j += this.contentSizeMax + this.midu) {
                     let d = dist(0, 0, j, i);
 
                     var juli1 = dist(j, i, center1X, center1Y);
@@ -346,9 +360,9 @@ function DiamondPint() {
             minY = y2 * (l - (this.radius / 2)) / l;
 
             fill(255);
-            for (let i = -(this.radius / 2) - this.contentSizeMax; i < (this.radius / 2); i += this.contentSizeMax) {
+            for (let i = -(this.radius / 2) - this.contentSizeMax; i < (this.radius / 2); i += this.contentSizeMax + this.midu) {
                 this.charIndex = 0;
-                for (let j = -(this.radius / 2) - this.contentSizeMax; j < (this.radius / 2); j += this.contentSizeMax) {
+                for (let j = -(this.radius / 2) - this.contentSizeMax; j < (this.radius / 2); j += this.contentSizeMax + this.midu) {
                     let d = dist(0, 0, j, i);
 
                     var juli1 = dist(j, i, center1X, center1Y);
@@ -418,6 +432,7 @@ function ArrowPint() {
     this.n = settings.f4_factor;
     this.rotateOpen = settings.f4_rotateOpen;
     this.charIndex = 0;
+    this.midu = settings.f4_midu;
     let maxDistance = 0;
 
     this.readly = function () {
@@ -435,6 +450,7 @@ function ArrowPint() {
         this.contentSizeMax = settings.f4_contentSizeMax;
         this.rotateOpen = settings.f4_rotateOpen;
         this.n = settings.f4_factor;
+        this.midu = settings.f4_midu;
     }
 
 
@@ -517,9 +533,9 @@ function ArrowPint() {
 
         print("isInner : " + isInner);
         if (isInner) {
-            for (let i = y - this.mHeight / 2; i <= y + this.mHeight / 2; i += (this.contentSizeMax)) {
+            for (let i = y - this.mHeight / 2; i <= y + this.mHeight / 2; i += (this.contentSizeMax) + this.midu) {
                 this.charIndex = 0;
-                for (let k = x - this.mWidth / 2; k <= x + this.mWidth / 2; k += (this.contentSizeMax)) {
+                for (let k = x - this.mWidth / 2; k <= x + this.mWidth / 2; k += (this.contentSizeMax)+ this.midu) {
                     // let d = dist(this.x, this.y, k, i)
                     // if (d < this.radius / 2 + 5) {
                     // let size = dist(mouseX, mouseY, k, i);
@@ -607,9 +623,9 @@ function ArrowPint() {
             }
 
         } else {
-            for (let i = y - this.mHeight / 2; i <= y + this.mHeight / 2; i += (this.contentSizeMax)) {
+            for (let i = y - this.mHeight / 2; i <= y + this.mHeight / 2; i += (this.contentSizeMax)+ this.midu) {
                 this.charIndex = 0;
-                for (let k = x - this.mWidth / 2; k <= x + this.mWidth / 2; k += (this.contentSizeMax)) {
+                for (let k = x - this.mWidth / 2; k <= x + this.mWidth / 2; k += (this.contentSizeMax)+ this.midu) {
                     // let d = dist(this.x, this.y, k, i)
                     // if (d < this.radius / 2 + 5) {
                     // let size = dist(mouseX, mouseY, k, i);
@@ -746,6 +762,7 @@ function LinePint() {
     this.rotateOpen = settings.f3_rotateOpen;
     this.n = settings.f3_factor;
     this.charIndex = 0;
+    this.midu = settings.f3_midu;
     let maxDistance = 0;
 
     this.readly = function () {
@@ -762,6 +779,7 @@ function LinePint() {
         this.contentSizeMax = settings.f3_contentSizeMax;
         this.rotateOpen = settings.f3_rotateOpen;
         this.n = settings.f3_factor;
+        this.midu = settings.f3_midu;
     }
 
 
@@ -782,9 +800,9 @@ function LinePint() {
         var isInnerx = -(this.mWidth / 2) < realMouseX && realMouseX < this.mWidth / 2 && -(this.mHeight / 2) < realMouseY && realMouseY < this.mHeight / 2;
         print(isInnerx);
         if (isInnerx) {
-            for (let i = -this.mHeight / 2 + this.contentSizeMax; i < this.mHeight / 2; i += this.contentSizeMax) {
+            for (let i = -this.mHeight / 2 + this.contentSizeMax; i < this.mHeight / 2; i += this.contentSizeMax + this.midu) {
                 this.charIndex = 0;
-                for (let j = -this.mWidth / 2 + this.contentSizeMax; j < this.mWidth / 2; j += this.contentSizeMax) {
+                for (let j = -this.mWidth / 2 + this.contentSizeMax; j < this.mWidth / 2; j += this.contentSizeMax + this.midu) {
                     //总长度
                     var totalL = Math.abs(realMouseX) + (this.mWidth / 2);
                     //变化差值
@@ -827,9 +845,9 @@ function LinePint() {
                 }
             }
         } else {
-            for (let i = -this.mHeight / 2 + this.contentSizeMax; i < this.mHeight / 2; i += this.contentSizeMax) {
+            for (let i = -this.mHeight / 2 + this.contentSizeMax; i < this.mHeight / 2; i += this.contentSizeMax + this.midu) {
                 this.charIndex = 0;
-                for (let j = -this.mWidth / 2 + this.contentSizeMax; j < this.mWidth / 2; j += this.contentSizeMax) {
+                for (let j = -this.mWidth / 2 + this.contentSizeMax; j < this.mWidth / 2; j += this.contentSizeMax + this.midu) {
                     //总长度
                     var totalL = Math.abs(realMouseX) + (this.mWidth / 2);
                     //变化差值
@@ -916,6 +934,7 @@ function RectanglePint() {
     this.n = settings.f2_factor;
     this.charIndex = 0;
     let maxDistance = 0;
+    this.midu = settings.f2_midu;
 
     this.readly = function () {
         maxDistance = dist(0, 0, width, height);
@@ -935,6 +954,7 @@ function RectanglePint() {
         this.contentSizeMax = settings.f2_contentSizeMax;
         this.rotateOpen = settings.f2_rotateOpen;
         this.n = settings.f2_factor;
+        this.midu = settings.f2_midu;
     }
 
 
@@ -952,9 +972,9 @@ function RectanglePint() {
 
         var isInnerx = -(this.mWidth / 2) < realMouseX && realMouseX < this.mWidth / 2 && -(this.mHeight / 2) < realMouseY && realMouseY < this.mHeight / 2;
         if (isInnerx) {
-            for (let i = -this.mHeight / 2 + this.contentSizeMax; i < this.mHeight / 2; i += this.contentSizeMax) {
+            for (let i = -this.mHeight / 2 + this.contentSizeMax; i < this.mHeight / 2; i += this.contentSizeMax + this.midu) {
                 this.charIndex = 0;
-                for (let j = -this.mWidth / 2 + this.contentSizeMax; j < this.mWidth / 2; j += this.contentSizeMax) {
+                for (let j = -this.mWidth / 2 + this.contentSizeMax; j < this.mWidth / 2; j += this.contentSizeMax + this.midu) {
                     //总长度
                     var totalL = dist(0, 0, realMouseX, realMouseY) + radius;
                     //变化差值
@@ -1049,9 +1069,9 @@ function RectanglePint() {
             //
             // minY = y2 * (l - (radius / 2)) / l;
 
-            for (let i = -this.mHeight / 2 + this.contentSizeMax; i < this.mHeight / 2; i += this.contentSizeMax) {
+            for (let i = -this.mHeight / 2 + this.contentSizeMax; i < this.mHeight / 2; i += this.contentSizeMax + this.midu) {
                 this.charIndex = 0;
-                for (let j = -this.mWidth / 2 + this.contentSizeMax; j < this.mWidth / 2; j += this.contentSizeMax) {
+                for (let j = -this.mWidth / 2 + this.contentSizeMax; j < this.mWidth / 2; j += this.contentSizeMax + this.midu) {
 
                     //鼠标到正方形中心到距离
                     var mJuli = dist(realMouseX, realMouseY, 0, 0);
@@ -1159,120 +1179,6 @@ function RectanglePint() {
                             displayText(this.getZM(), this.contentColor, size, j, i);
                         }
                     }
-                    // if (j / i >= this.mWidth / this.mHeight) {
-                    //
-                    //
-                    //     var xx = this.mWidth / 2;
-                    //     var yy = xx * realMouseY / realMouseX;
-                    //
-                    //     var bl = (l - (this.mWidth / 2)) / l;
-                    //
-                    //     if (realMouseX > this.mWidth / 2) {
-                    //         if (j / i >= this.mWidth / this.mHeight) {
-                    //             minX = xx * bl;
-                    //             minY = yy * bl;
-                    //         }
-                    //     } else if (realMouseX < -this.mWidth / 2) {
-                    //         if (j / i >= this.mWidth / this.mHeight) {
-                    //             minX = -xx * bl;
-                    //             minY = yy * bl;
-                    //         }
-                    //     }
-                    //
-                    // } else {
-                    //
-                    //     var yy = 1 / 2 * this.mHeight;
-                    //     var xx = yy * realMouseX / realMouseY;
-                    //
-                    //     var bl = (l - (this.mHeight / 2)) / l;
-                    //     print(this.mHeight / 2);
-                    //     if (realMouseY > this.mHeight / 2) {
-                    //         if (j / i < this.mWidth / this.mHeight) {
-                    //             minX = xx * bl;
-                    //             minY = yy * bl;
-                    //         }
-                    //     } else if (realMouseY < -this.mHeight / 2) {
-                    //         if (j / i < this.mWidth / this.mHeight) {
-                    //             minX = xx * bl;
-                    //             minY = -yy * bl;
-                    //
-                    //         }
-                    //     }
-                    // }
-                    //
-                    //
-                    // //总长度
-                    // var totalL = dist(0, 0, minX, minY) + radius;
-                    // //变化差值
-                    // var totalChangeSize = this.contentSizeMax - this.contentSize;
-                    //
-                    // var xD = 0;
-                    // var yD = 0;
-                    // var juli = 500;
-                    //
-                    //
-                    // if ((Math.abs(j - minX) / Math.abs(i - minY)) > this.mWidth / this.mHeight) {
-                    //     // xD = j - realMouseX;
-                    //     xD = j;
-                    //     yD = (j - minX) * this.mHeight / this.mWidth + minY;
-                    //
-                    //
-                    //     juli = dist(xD, yD, minX, minY);
-                    //
-                    //     //
-                    //     if (juli < totalL * this.n) {
-                    //
-                    //         var qTotal = totalL * this.n;
-                    //         var bh = juli / qTotal * totalChangeSize / 2
-                    //         var size = this.contentSize + bh;
-                    //         if (this.rotateOpen) {
-                    //             var angle = atan2(realMouseY - i, realMouseX - j);
-                    //             displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
-                    //         } else {
-                    //             displayText(this.getZM(), '#00FF00', size, j, i);
-                    //         }
-                    //     } else {
-                    //         var hTotal = totalL * (1 - this.n);
-                    //         var bh = (juli - (totalL * this.n)) / hTotal * totalChangeSize / 2 + (0.5 * totalChangeSize)
-                    //         var size = this.contentSize + bh;
-                    //         if (this.rotateOpen) {
-                    //             var angle = atan2(realMouseY - i, realMouseX - j);
-                    //             displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
-                    //         } else {
-                    //             displayText(this.getZM(), this.contentColor, size, j, i);
-                    //         }
-                    //     }
-                    // } else {
-                    //     // yD = i - realMouseY;
-                    //     yD = i;
-                    //     xD = (i - minY) * this.mWidth / this.mHeight + minX;
-                    //
-                    //     juli = dist(xD, yD, minX, minY);
-                    //
-                    //     // //
-                    //     if (juli < totalL * this.n) {
-                    //
-                    //         var qTotal = totalL * this.n;
-                    //         var bh = juli / qTotal * totalChangeSize / 2
-                    //         var size = this.contentSize + bh;
-                    //         if (this.rotateOpen) {
-                    //             var angle = atan2(realMouseY - i, realMouseX - j);
-                    //             displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
-                    //         } else {
-                    //             displayText(this.getZM(), this.contentColor, size, j, i);
-                    //         }
-                    //     } else {
-                    //         var hTotal = totalL * (1 - this.n);
-                    //         var bh = (juli - (totalL * this.n)) / hTotal * totalChangeSize / 2 + (0.5 * totalChangeSize)
-                    //         var size = this.contentSize + bh;
-                    //         if (this.rotateOpen) {
-                    //             var angle = atan2(realMouseY - i, realMouseX - j);
-                    //             displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
-                    //         } else {
-                    //             displayText(this.getZM(), this.contentColor, size, j, i);
-                    //         }
-                    //     }
-                    // }
                 }
             }
 
@@ -1296,6 +1202,7 @@ function CirclePint() {
     this.radius = settings.radius;
     this.bgColor = settings.bgColor;
     this.content = settings.content;
+    this.midu = settings.midu;
     this.contentColor = '#FFF';
     this.contentSize = 12
     this.contentSizeMax = 12
@@ -1319,6 +1226,7 @@ function CirclePint() {
         this.contentColor = contentColor;
         this.contentSize = contentSize;
         this.contentSizeMax = contentSizeMax;
+        this.midu = settings.midu;
         this.rotateOpen = settings.rotateOpen
         this.n = n;
     }
@@ -1337,9 +1245,9 @@ function CirclePint() {
 
         if (isInner) {
 
-            for (let i = -(this.radius / 2) - this.contentSizeMax; i < (this.radius / 2); i += this.contentSizeMax) {
+            for (let i = -(this.radius / 2) - this.contentSizeMax; i < (this.radius / 2); i += this.contentSizeMax + this.midu) {
                 this.charIndex = 0;
-                for (let j = -(this.radius / 2) - this.contentSizeMax; j < (this.radius / 2); j += this.contentSizeMax) {
+                for (let j = -(this.radius / 2) - this.contentSizeMax; j < (this.radius / 2); j += this.contentSizeMax + this.midu) {
                     let d = dist(0, 0, j, i);
                     if (d < this.radius / 2) {
 
@@ -1396,9 +1304,9 @@ function CirclePint() {
             minY = y2 * (l - (this.radius / 2)) / l;
 
             fill(255);
-            for (let i = -(this.radius / 2) - this.contentSizeMax; i < (this.radius / 2); i += this.contentSizeMax) {
+            for (let i = -(this.radius / 2) - this.contentSizeMax; i < (this.radius / 2); i += this.contentSizeMax + this.midu) {
                 this.charIndex = 0;
-                for (let j = -(this.radius / 2) - this.contentSizeMax; j < (this.radius / 2); j += this.contentSizeMax) {
+                for (let j = -(this.radius / 2) - this.contentSizeMax; j < (this.radius / 2); j += this.contentSizeMax + this.midu) {
                     let d = dist(0, 0, j, i);
                     if (d < this.radius / 2) {
 
