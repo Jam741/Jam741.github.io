@@ -31,7 +31,7 @@ var settings = {
 
     f3_type: '线',
     f3_bgColor: '#000000',
-    f3_width: 300,
+    f3_width: 200,
     f3_height: 800,
     f3_content: "SOBEY",
     f3_contentColor: '#FFFFFF',
@@ -167,33 +167,33 @@ f1.add(settings, "content").name("文本")
 f1.addColor(settings, "contentColor").name("文本颜色")
 f1.add(settings, "contentSize", 2, 14).step(1).name("最小子体")
 f1.add(settings, "contentSizeMax", 16, 80).step(1).name("最大字体")
-f1.add(settings, "factor", 0.1, 1).step(0.1).name("密度")
+f1.add(settings, "factor", 0.1, 1).step(0.1).name("强度")
 f1.add(settings, "rotateOpen", true).name("向心角度")
 f1.open();
 
 let f2 = gui.addFolder("矩形参数");
 f2.addColor(settings, "f2_bgColor").name("背景色")
-f2.add(settings, "f2_width", 100, innerWidth).step(10).name("宽度")
-f2.add(settings, "f2_height", 100, innerHeight).step(10).name("高度")
+f2.add(settings, "f2_width", 100, innerWidth).step(10).name("尺寸")
+// f2.add(settings, "f2_height", 100, innerHeight).step(10).name("高度")
 f2.add(settings, "f2_content").name("文本")
 f2.addColor(settings, "f2_contentColor").name("文本颜色")
 f2.add(settings, "f2_contentSize", 1, 80).step(1).name("最小子体")
 f2.add(settings, "f2_contentSizeMax", 16, 80).step(1).name("最大字体")
 f2.add(settings, "f2_rotateOpen", true).name("向心角度")
-f2.add(settings, "f2_factor", 0.1, 1).step(0.1).name("密度")
+f2.add(settings, "f2_factor", 0.1, 1).step(0.1).name("强度")
 
 // f2.open()
 
 let f3 = gui.addFolder("线参数")
 f3.addColor(settings, "f3_bgColor").name("背景色")
-f3.add(settings, "f3_width", 100, innerWidth).step(10).name("宽度")
-f3.add(settings, "f3_height", 100, innerHeight).step(10).name("高度")
+f3.add(settings, "f3_width", 10, innerWidth / 5).step(10).name("尺寸")
+// f3.add(settings, "f3_height", 100, innerHeight).step(10).name("高度")
 f3.add(settings, "f3_content").name("文本")
 f3.addColor(settings, "f3_contentColor").name("文本颜色")
 f3.add(settings, "f3_contentSize", 1, 80).step(1).name("最小子体")
 f3.add(settings, "f3_contentSizeMax", 16, 80).step(1).name("最大字体")
 f3.add(settings, "f3_rotateOpen", true).name("向心角度")
-f3.add(settings, "f3_factor", 0.1, 1).step(0.1).name("密度")
+f3.add(settings, "f3_factor", 0.1, 1).step(0.1).name("强度")
 
 let f4 = gui.addFolder("箭头")
 f4.addColor(settings, "f4_bgColor").name("背景色")
@@ -203,7 +203,7 @@ f4.addColor(settings, "f4_contentColor").name("文本颜色")
 f4.add(settings, "f4_contentSize", 1, 80).step(1).name("最小子体")
 f4.add(settings, "f4_contentSizeMax", 16, 80).step(1).name("最大字体")
 f4.add(settings, "f4_rotateOpen", true).name("向心角度")
-f4.add(settings, "f4_factor", 0.1, 1).step(0.1).name("密度")
+f4.add(settings, "f4_factor", 0.1, 1).step(0.1).name("强度")
 
 let f5 = gui.addFolder("菱形")
 f5.addColor(settings, "f4_bgColor").name("背景色")
@@ -213,7 +213,7 @@ f5.addColor(settings, "f5_contentColor").name("文本颜色")
 f5.add(settings, "f5_contentSize", 1, 80).step(1).name("最小子体")
 f5.add(settings, "f5_contentSizeMax", 16, 80).step(1).name("最大字体")
 f5.add(settings, "f5_rotateOpen", true).name("向心角度")
-f5.add(settings, "f5_factor", 0.1, 1).step(0.1).name("密度")
+f5.add(settings, "f5_factor", 0.1, 1).step(0.1).name("强度")
 
 
 function DiamondPint() {
@@ -261,14 +261,15 @@ function DiamondPint() {
         var realMouseX = mouseX - (innerWidth / 2);
         var realMouseY = mouseY - (innerHeight / 2);
 
-        var center1X = -(this.radius / 2);
-        var center1Y = -(this.radius / 2);
-        var center2X = (this.radius / 2);
-        var center2Y = -(this.radius / 2);
-        var center3X = -(this.radius / 2);
-        var center3Y = (this.radius / 2);
-        var center4X = (this.radius / 2);
-        var center4Y = (this.radius / 2);
+        var pyl = this.radius / 50;
+        var center1X = -(this.radius / 2) - pyl;
+        var center1Y = -(this.radius / 2) - pyl;
+        var center2X = (this.radius / 2) + pyl;
+        var center2Y = -(this.radius / 2) - pyl;
+        var center3X = -(this.radius / 2) - pyl;
+        var center3Y = (this.radius / 2) + pyl;
+        var center4X = (this.radius / 2) + pyl;
+        var center4Y = (this.radius / 2) + pyl;
 
         var r = (this.radius / 2);
 
@@ -324,7 +325,8 @@ function DiamondPint() {
                                 displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
                             } else {
                                 displayText(this.getZM(), this.contentColor, size, j, i);
-                            }                        }
+                            }
+                        }
                     }
                 }
             }
@@ -387,7 +389,8 @@ function DiamondPint() {
                                 displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
                             } else {
                                 displayText(this.getZM(), this.contentColor, size, j, i);
-                            }                        }
+                            }
+                        }
                     }
                 }
             }
@@ -559,7 +562,8 @@ function ArrowPint() {
                                     displayTextRotate(this.getZM(), this.contentColor, size, k, i, angle);
                                 } else {
                                     displayText(this.getZM(), this.contentColor, size, k, i);
-                                }                            }
+                                }
+                            }
 
                         }
                     } else {
@@ -592,7 +596,8 @@ function ArrowPint() {
                                     displayTextRotate(this.getZM(), this.contentColor, size, k, i, angle);
                                 } else {
                                     displayText(this.getZM(), this.contentColor, size, k, i);
-                                }                            }
+                                }
+                            }
 
                         }
 
@@ -660,7 +665,8 @@ function ArrowPint() {
                                     displayTextRotate(this.getZM(), this.contentColor, size, k, i, angle);
                                 } else {
                                     displayText(this.getZM(), this.contentColor, size, k, i);
-                                }                            }
+                                }
+                            }
 
                         }
                     } else {
@@ -731,7 +737,7 @@ function ArrowPint() {
 function LinePint() {
 
     this.mWidth = settings.f3_width;
-    this.mHeight = settings.f3_height;
+    this.mHeight = settings.f3_width * 3;
     this.bgColor = settings.f3_bgColor;
     this.content = settings.f3_content;
     this.contentColor = settings.f3_contentColor;
@@ -748,7 +754,7 @@ function LinePint() {
 
     this.update = function () {
         this.mWidth = settings.f3_width;
-        this.mHeight = settings.f3_height;
+        this.mHeight = settings.f3_width * 3;
         this.bgColor = settings.f3_bgColor;
         this.content = settings.f3_content;
         this.contentColor = settings.f3_contentColor;
@@ -769,6 +775,9 @@ function LinePint() {
         // rect(x,y,this.mWidth,this.mHeight);
 
         translate(innerWidth / 2, innerHeight / 2);
+
+
+        var pyl = this.mWidth + (this.mWidth / 3);
 
         var isInnerx = -(this.mWidth / 2) < realMouseX && realMouseX < this.mWidth / 2 && -(this.mHeight / 2) < realMouseY && realMouseY < this.mHeight / 2;
         print(isInnerx);
@@ -791,8 +800,12 @@ function LinePint() {
                         if (this.rotateOpen) {
                             var angle = atan2(realMouseY - i, realMouseX - j);
                             displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
+                            displayTextRotate(this.getZM(), this.contentColor, size, j - pyl, i, angle);
+                            displayTextRotate(this.getZM(), this.contentColor, size, j + pyl, i, angle);
                         } else {
                             displayText(this.getZM(), this.contentColor, size, j, i);
+                            displayText(this.getZM(), this.contentColor, size, j-pyl, i);
+                            displayText(this.getZM(), this.contentColor, size, j+pyl, i);
                         }
                     } else {
                         var hTotal = totalL * (1 - this.n);
@@ -801,14 +814,18 @@ function LinePint() {
                         if (this.rotateOpen) {
                             var angle = atan2(realMouseY - i, realMouseX - j);
                             displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
+                            displayTextRotate(this.getZM(), this.contentColor, size, j - pyl, i, angle);
+                            displayTextRotate(this.getZM(), this.contentColor, size, j + pyl, i, angle);
                         } else {
                             displayText(this.getZM(), this.contentColor, size, j, i);
+                            displayText(this.getZM(), this.contentColor, size, j-pyl, i);
+                            displayText(this.getZM(), this.contentColor, size, j+pyl, i);
+
                         }
                     }
 
                 }
             }
-
         } else {
             for (let i = -this.mHeight / 2 + this.contentSizeMax; i < this.mHeight / 2; i += this.contentSizeMax) {
                 this.charIndex = 0;
@@ -820,13 +837,15 @@ function LinePint() {
 
                     var l = Math.abs(realMouseX);
 
-                    var bl = (l - (this.mWidth / 2)) / l;
+                    var bl = l == 0 ? 0.1 : (l - (this.mWidth / 2)) / l;
 
-
+                    var dx
                     if (realMouseX < -this.mWidth / 2) {
-                        var dx = -this.mWidth / 2 * bl;
+                         dx = -this.mWidth / 2 * bl;
                     } else if (realMouseX >= this.mWidth / 2) {
-                        var dx = this.mWidth / 2 * bl;
+                         dx = this.mWidth / 2 * bl;
+                    }else{
+                        dx = Math.abs(realMouseX - j);
                     }
 
                     totalL = Math.abs(dx) + (this.mWidth / 2)
@@ -850,8 +869,12 @@ function LinePint() {
                         if (this.rotateOpen) {
                             var angle = atan2(realMouseY - i, realMouseX - j);
                             displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
+                            displayTextRotate(this.getZM(), this.contentColor, size, j-pyl, i, angle);
+                            displayTextRotate(this.getZM(), this.contentColor, size, j+pyl, i, angle);
                         } else {
                             displayText(this.getZM(), this.contentColor, size, j, i);
+                            displayText(this.getZM(), this.contentColor, size, j-pyl, i);
+                            displayText(this.getZM(), this.contentColor, size, j+pyl, i);
                         }
                     } else {
                         var hTotal = totalL * (1 - this.n);
@@ -860,13 +883,16 @@ function LinePint() {
                         if (this.rotateOpen) {
                             var angle = atan2(realMouseY - i, realMouseX - j);
                             displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
+                            displayTextRotate(this.getZM(), this.contentColor, size, j-pyl, i, angle);
+                            displayTextRotate(this.getZM(), this.contentColor, size, j+pyl, i, angle);
                         } else {
                             displayText(this.getZM(), this.contentColor, size, j, i);
+                            displayText(this.getZM(), this.contentColor, size, j-pyl, i);
+                            displayText(this.getZM(), this.contentColor, size, j+pyl, i);
                         }
                     }
                 }
             }
-
         }
     }
 
@@ -880,7 +906,7 @@ function LinePint() {
 function RectanglePint() {
 
     this.mWidth = settings.f2_width;
-    this.mHeight = settings.f2_height;
+    this.mHeight = settings.f2_width;
     this.bgColor = settings.f2_bgColor;
     this.content = settings.f2_content;
     this.contentColor = settings.f2_contentColor;
@@ -901,7 +927,7 @@ function RectanglePint() {
         this.x = innerWidth / 2;
         this.y = innerHeight / 2;
         this.mWidth = settings.f2_width;
-        this.mHeight = settings.f2_height;
+        this.mHeight = settings.f2_width;
         this.bgColor = settings.f2_bgColor;
         this.content = settings.f2_content;
         this.contentColor = settings.f2_contentColor;
@@ -1027,158 +1053,226 @@ function RectanglePint() {
                 this.charIndex = 0;
                 for (let j = -this.mWidth / 2 + this.contentSizeMax; j < this.mWidth / 2; j += this.contentSizeMax) {
 
+                    //鼠标到正方形中心到距离
+                    var mJuli = dist(realMouseX, realMouseY, 0, 0);
 
-                    if (j / i >= this.mWidth / this.mHeight) {
-
-
-                        var xx = this.mWidth / 2;
-                        var yy = xx * realMouseY / realMouseX;
-
-                        var bl = (l - (this.mWidth / 2)) / l;
-
-                        if (realMouseX > this.mWidth / 2) {
-                            if (j / i >= this.mWidth / this.mHeight) {
-                                minX = xx * bl;
-                                minY = yy * bl;
-                            }
-                        } else if (realMouseX < -this.mWidth / 2) {
-                            if (j / i >= this.mWidth / this.mHeight) {
-                                minX = -xx * bl;
-                                minY = yy * bl;
-                            }
-                        }
-
-                    }
-
-                        // else if(j / i == this.mWidth / this.mHeight){
-                        //
-                        //     var xx = this.mWidth /2;
-                        //     var yy = xx * realMouseY / realMouseX;
-                        //
-                        //     var bl = this.mWidth / this.mHeight;
-                        //
-                        //     if(realMouseX > this.mWidth / 2){
-                        //         if(j / i >= this.mWidth / this.mHeight){
-                        //             minX = xx * bl;
-                        //             minY = yy * bl;
-                        //         }
-                        //     }else if(realMouseX < -this.mWidth / 2){
-                        //         if(j / i >= this.mWidth / this.mHeight){
-                        //             minX =  -xx * bl;
-                        //             minY = yy * bl;
-                        //         }
-                        //     }
-                        // }
                     //
 
-                    else {
+                    var w = this.mHeight / 2;
 
-                        var yy = 1 / 2 * this.mHeight;
-                        var xx = yy * realMouseX / realMouseY;
+                    print(w);
 
-                        var bl = (l - (this.mHeight / 2)) / l;
-                        print(this.mHeight / 2);
-                        if (realMouseY > this.mHeight / 2) {
-                            if (j / i < this.mWidth / this.mHeight) {
-                                minX = xx * bl;
-                                minY = yy * bl;
-                            }
-                        } else if (realMouseY < -this.mHeight / 2) {
-                            if (j / i < this.mWidth / this.mHeight) {
-                                minX = xx * bl;
-                                minY = -yy * bl;
+                    var x0 = 0;
+                    var y0 = 0;
 
-                            }
-                        }
-                    }
-
-
-                    //总长度
-                    var totalL = dist(0, 0, minX, minY) + radius;
-                    //变化差值
-                    var totalChangeSize = this.contentSizeMax - this.contentSize;
 
                     var xD = 0;
                     var yD = 0;
-                    var juli = 500;
 
+                    var  juli = 0;
 
-                    if ((Math.abs(j - minX) / Math.abs(i - minY)) > this.mWidth / this.mHeight) {
-                        // xD = j - realMouseX;
-                        xD = j;
-                        yD = (j - minX) * this.mHeight / this.mWidth + minY;
-
-
-                        juli = dist(xD, yD, minX, minY);
-
-                        //
-                        if (juli < totalL * this.n) {
-
-                            var qTotal = totalL * this.n;
-                            var bh = juli / qTotal * totalChangeSize / 2
-                            var size = this.contentSize + bh;
-                            if (this.rotateOpen) {
-                                var angle = atan2(realMouseY - i, realMouseX - j);
-                                displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
+                    if (Math.abs(realMouseX) > Math.abs(realMouseY)) {
+                        var xbiy = Math.abs(realMouseY / realMouseX);
+                        var bili = (Math.abs(realMouseX) - (w / 2)) / Math.abs(realMouseX);
+                        var bili2 = bili;
+                        if (realMouseX > 0) {
+                            if (realMouseY > 0) {
+                                x0 = bili2 * (w / 2);
+                                y0 = bili2 * (w / 2) * xbiy;
                             } else {
-                                displayText(this.getZM(), this.contentColor, size, j, i);
+                                x0 = bili2 * (w / 2);
+                                y0 = -bili2 * (w / 2) * xbiy
                             }
                         } else {
-                            var hTotal = totalL * (1 - this.n);
-                            var bh = (juli - (totalL * this.n)) / hTotal * totalChangeSize / 2 + (0.5 * totalChangeSize)
-                            var size = this.contentSize + bh;
-                            if (this.rotateOpen) {
-                                var angle = atan2(realMouseY - i, realMouseX - j);
-                                displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
+                            if (realMouseY > 0) {
+                                x0 = -bili2 * (w / 2);
+                                y0 = bili2 * (w / 2) * xbiy;
                             } else {
-                                displayText(this.getZM(), this.contentColor, size, j, i);
+                                x0 = -bili2 * (w / 2);
+                                y0 = -bili2 * (w / 2) * xbiy;
                             }
                         }
                     } else {
-                        // yD = i - realMouseY;
-                        yD = i;
-                        xD = (i - minY) * this.mWidth / this.mHeight + minX;
-
-                        juli = dist(xD, yD, minX, minY);
-
-                        // //
-                        if (juli < totalL * this.n) {
-
-                            var qTotal = totalL * this.n;
-                            var bh = juli / qTotal * totalChangeSize / 2
-                            var size = this.contentSize + bh;
-                            if (this.rotateOpen) {
-                                var angle = atan2(realMouseY - i, realMouseX - j);
-                                displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
+                        var xbiy = Math.abs(realMouseX / realMouseY);
+                        var bili = (Math.abs(realMouseY) - (w / 2)) / Math.abs(realMouseY);
+                        var bili2 = bili;
+                        if (realMouseY > 0) {
+                            if (realMouseX > 0) {
+                                y0 = bili2 * (w / 2);
+                                x0 = bili2 * (w / 2) * xbiy;
                             } else {
-                                displayText(this.getZM(), this.contentColor, size, j, i);
+                                y0 = bili2 * (w / 2);
+                                x0 = -bili2 * (w / 2) * xbiy;
                             }
                         } else {
-                            var hTotal = totalL * (1 - this.n);
-                            var bh = (juli - (totalL * this.n)) / hTotal * totalChangeSize / 2 + (0.5 * totalChangeSize)
-                            var size = this.contentSize + bh;
-                            if (this.rotateOpen) {
-                                var angle = atan2(realMouseY - i, realMouseX - j);
-                                displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
+                            if (realMouseX > 0) {
+                                y0 = -bili2 * (w / 2);
+                                x0 = bili2 * (w / 2) * xbiy;
                             } else {
-                                displayText(this.getZM(), this.contentColor, size, j, i);
+                                y0 = -bili2 * (w / 2);
+                                x0 = -bili2 * (w / 2) * xbiy;
                             }
+
                         }
                     }
-                    // if (juli < totalL * this.n) {
+
+                    if ((Math.abs(j - x0) / Math.abs(i - y0)) > this.mWidth / this.mHeight) {
+                        // xD = j - realMouseX;
+                        xD = j;
+                        yD = (j - x0) * this.mHeight / this.mWidth + y0;
+
+
+                        juli = dist(xD, yD, x0, y0);
+
+                    } else {
+                        // yD = i - realMouseY;
+                        yD = i;
+                        xD = (i - y0) * this.mWidth / this.mHeight + x0;
+
+                        juli = dist(xD, yD, x0, y0);
+
+                    }
+                    //总长度
+                    var totalL = dist(0, 0, x0, y0) + radius;
+                    //变化差值
+                    var totalChangeSize = this.contentSizeMax - this.contentSize;
                     //
-                    //     var qTotal = totalL * this.n;
-                    //     var bh = juli / qTotal * totalChangeSize / 2
-                    //     var size = this.contentSize + bh;
-                    //     displayText(this.getZM(), this.contentColor, size, j, i);
+                    if (juli < totalL * this.n) {
+
+                        var qTotal = totalL * this.n;
+                        var bh = juli / qTotal * totalChangeSize / 2
+                        var size = this.contentSize + bh;
+                        if (this.rotateOpen) {
+                            var angle = atan2(realMouseY - i, realMouseX - j);
+                            displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
+                        } else {
+                            displayText(this.getZM(), this.contentColor, size, j, i);
+                        }
+                    } else {
+                        var hTotal = totalL * (1 - this.n);
+                        var bh = (juli - (totalL * this.n)) / hTotal * totalChangeSize / 2 + (0.5 * totalChangeSize)
+                        var size = this.contentSize + bh;
+                        if (this.rotateOpen) {
+                            var angle = atan2(realMouseY - i, realMouseX - j);
+                            displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
+                        } else {
+                            displayText(this.getZM(), this.contentColor, size, j, i);
+                        }
+                    }
+                    // if (j / i >= this.mWidth / this.mHeight) {
+                    //
+                    //
+                    //     var xx = this.mWidth / 2;
+                    //     var yy = xx * realMouseY / realMouseX;
+                    //
+                    //     var bl = (l - (this.mWidth / 2)) / l;
+                    //
+                    //     if (realMouseX > this.mWidth / 2) {
+                    //         if (j / i >= this.mWidth / this.mHeight) {
+                    //             minX = xx * bl;
+                    //             minY = yy * bl;
+                    //         }
+                    //     } else if (realMouseX < -this.mWidth / 2) {
+                    //         if (j / i >= this.mWidth / this.mHeight) {
+                    //             minX = -xx * bl;
+                    //             minY = yy * bl;
+                    //         }
+                    //     }
                     //
                     // } else {
-                    //     var hTotal = totalL * (1 - this.n);
-                    //     var bh = (juli - (totalL * this.n)) / hTotal * totalChangeSize / 2 + (0.5 * totalChangeSize)
-                    //     var size = this.contentSize + bh;
-                    //     displayText(this.getZM(), this.contentColor, size, j, i);
+                    //
+                    //     var yy = 1 / 2 * this.mHeight;
+                    //     var xx = yy * realMouseX / realMouseY;
+                    //
+                    //     var bl = (l - (this.mHeight / 2)) / l;
+                    //     print(this.mHeight / 2);
+                    //     if (realMouseY > this.mHeight / 2) {
+                    //         if (j / i < this.mWidth / this.mHeight) {
+                    //             minX = xx * bl;
+                    //             minY = yy * bl;
+                    //         }
+                    //     } else if (realMouseY < -this.mHeight / 2) {
+                    //         if (j / i < this.mWidth / this.mHeight) {
+                    //             minX = xx * bl;
+                    //             minY = -yy * bl;
+                    //
+                    //         }
+                    //     }
                     // }
-
+                    //
+                    //
+                    // //总长度
+                    // var totalL = dist(0, 0, minX, minY) + radius;
+                    // //变化差值
+                    // var totalChangeSize = this.contentSizeMax - this.contentSize;
+                    //
+                    // var xD = 0;
+                    // var yD = 0;
+                    // var juli = 500;
+                    //
+                    //
+                    // if ((Math.abs(j - minX) / Math.abs(i - minY)) > this.mWidth / this.mHeight) {
+                    //     // xD = j - realMouseX;
+                    //     xD = j;
+                    //     yD = (j - minX) * this.mHeight / this.mWidth + minY;
+                    //
+                    //
+                    //     juli = dist(xD, yD, minX, minY);
+                    //
+                    //     //
+                    //     if (juli < totalL * this.n) {
+                    //
+                    //         var qTotal = totalL * this.n;
+                    //         var bh = juli / qTotal * totalChangeSize / 2
+                    //         var size = this.contentSize + bh;
+                    //         if (this.rotateOpen) {
+                    //             var angle = atan2(realMouseY - i, realMouseX - j);
+                    //             displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
+                    //         } else {
+                    //             displayText(this.getZM(), '#00FF00', size, j, i);
+                    //         }
+                    //     } else {
+                    //         var hTotal = totalL * (1 - this.n);
+                    //         var bh = (juli - (totalL * this.n)) / hTotal * totalChangeSize / 2 + (0.5 * totalChangeSize)
+                    //         var size = this.contentSize + bh;
+                    //         if (this.rotateOpen) {
+                    //             var angle = atan2(realMouseY - i, realMouseX - j);
+                    //             displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
+                    //         } else {
+                    //             displayText(this.getZM(), this.contentColor, size, j, i);
+                    //         }
+                    //     }
+                    // } else {
+                    //     // yD = i - realMouseY;
+                    //     yD = i;
+                    //     xD = (i - minY) * this.mWidth / this.mHeight + minX;
+                    //
+                    //     juli = dist(xD, yD, minX, minY);
+                    //
+                    //     // //
+                    //     if (juli < totalL * this.n) {
+                    //
+                    //         var qTotal = totalL * this.n;
+                    //         var bh = juli / qTotal * totalChangeSize / 2
+                    //         var size = this.contentSize + bh;
+                    //         if (this.rotateOpen) {
+                    //             var angle = atan2(realMouseY - i, realMouseX - j);
+                    //             displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
+                    //         } else {
+                    //             displayText(this.getZM(), this.contentColor, size, j, i);
+                    //         }
+                    //     } else {
+                    //         var hTotal = totalL * (1 - this.n);
+                    //         var bh = (juli - (totalL * this.n)) / hTotal * totalChangeSize / 2 + (0.5 * totalChangeSize)
+                    //         var size = this.contentSize + bh;
+                    //         if (this.rotateOpen) {
+                    //             var angle = atan2(realMouseY - i, realMouseX - j);
+                    //             displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
+                    //         } else {
+                    //             displayText(this.getZM(), this.contentColor, size, j, i);
+                    //         }
+                    //     }
+                    // }
                 }
             }
 
