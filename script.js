@@ -67,6 +67,8 @@ var settings = {
 
 }
 
+var unit = 24;
+
 let circlePrint, rectanglePint, linePint, arrowPint, diamondPint;
 
 let font;
@@ -90,6 +92,8 @@ function saveAsCanvas() {
 }
 
 function setup() {
+
+    frameRate(30);
 
     c = createCanvas(innerWidth, innerHeight);
 
@@ -174,7 +178,7 @@ f1.addColor(settings, "contentColor").name("文本颜色")
 f1.add(settings, "contentSize", 2, 14).step(1).name("最小子体")
 f1.add(settings, "contentSizeMax", 16, 80).step(1).name("最大字体")
 f1.add(settings, "factor", 0.1, 1).step(0.1).name("强度")
-f1.add(settings, "midu", 1, 100).step(1).name("密度")
+f1.add(settings, "midu", -50, 50).step(1).name("密度")
 f1.add(settings, "rotateOpen", true).name("向心角度")
 f1.open();
 
@@ -187,7 +191,7 @@ f2.addColor(settings, "f2_contentColor").name("文本颜色")
 f2.add(settings, "f2_contentSize", 1, 80).step(1).name("最小子体")
 f2.add(settings, "f2_contentSizeMax", 16, 80).step(1).name("最大字体")
 f2.add(settings, "f2_factor", 0.1, 1).step(0.1).name("强度")
-f2.add(settings, "f2_midu", 1, 100).step(1).name("密度")
+f2.add(settings, "f2_midu", -50, 50).step(1).name("密度")
 f2.add(settings, "f2_rotateOpen", true).name("向心角度")
 
 // f2.open()
@@ -201,7 +205,7 @@ f3.addColor(settings, "f3_contentColor").name("文本颜色")
 f3.add(settings, "f3_contentSize", 1, 80).step(1).name("最小子体")
 f3.add(settings, "f3_contentSizeMax", 16, 80).step(1).name("最大字体")
 f3.add(settings, "f3_factor", 0.1, 1).step(0.1).name("强度")
-f3.add(settings, "f3_midu", 1, 100).step(1).name("密度")
+f3.add(settings, "f3_midu", -50, 50).step(1).name("密度")
 f3.add(settings, "f3_rotateOpen", true).name("向心角度")
 
 let f4 = gui.addFolder("箭头")
@@ -212,7 +216,7 @@ f4.addColor(settings, "f4_contentColor").name("文本颜色")
 f4.add(settings, "f4_contentSize", 1, 80).step(1).name("最小子体")
 f4.add(settings, "f4_contentSizeMax", 16, 80).step(1).name("最大字体")
 f4.add(settings, "f4_factor", 0.1, 1).step(0.1).name("强度")
-f4.add(settings, "f4_midu", 1, 100).step(1).name("密度")
+f4.add(settings, "f4_midu", -50, 50).step(1).name("密度")
 f4.add(settings, "f4_rotateOpen", true).name("向心角度")
 
 let f5 = gui.addFolder("菱形")
@@ -223,7 +227,7 @@ f5.addColor(settings, "f5_contentColor").name("文本颜色")
 f5.add(settings, "f5_contentSize", 1, 80).step(1).name("最小子体")
 f5.add(settings, "f5_contentSizeMax", 16, 80).step(1).name("最大字体")
 f5.add(settings, "f5_factor", 0.1, 1).step(0.1).name("强度")
-f5.add(settings, "f5_midu", 1, 100).step(1).name("密度")
+f5.add(settings, "f5_midu", -50, 50).step(1).name("密度")
 f5.add(settings, "f5_rotateOpen", true).name("向心角度")
 
 
@@ -360,9 +364,9 @@ function DiamondPint() {
             minY = y2 * (l - (this.radius / 2)) / l;
 
             fill(255);
-            for (let i = -(this.radius / 2) - this.contentSizeMax; i < (this.radius / 2); i += this.contentSizeMax + this.midu) {
+            for (let i = -(this.radius / 2) - this.contentSizeMax; i < (this.radius / 2); i += this.contentSizeMax  + this.midu) {
                 this.charIndex = 0;
-                for (let j = -(this.radius / 2) - this.contentSizeMax; j < (this.radius / 2); j += this.contentSizeMax + this.midu) {
+                for (let j = -(this.radius / 2) - this.contentSizeMax; j < (this.radius / 2); j += this.contentSizeMax  + this.midu) {
                     let d = dist(0, 0, j, i);
 
                     var juli1 = dist(j, i, center1X, center1Y);
