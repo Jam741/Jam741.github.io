@@ -198,7 +198,7 @@ f2.add(settings, "f2_rotateOpen", true).name("向心角度")
 
 let f3 = gui.addFolder("线参数")
 f3.addColor(settings, "f3_bgColor").name("背景色")
-f3.add(settings, "f3_width", 10, innerWidth / 5).step(10).name("尺寸")
+f3.add(settings, "f3_height", 10, innerWidth).step(10).name("尺寸")
 // f3.add(settings, "f3_height", 100, innerHeight).step(10).name("高度")
 f3.add(settings, "f3_content").name("文本")
 f3.addColor(settings, "f3_contentColor").name("文本颜色")
@@ -482,13 +482,13 @@ function ArrowPint() {
         // rect(x,y,this.mWidth,this.mHeight);
         // noStroke();
         // fill(this.bgColor);
-        let center1x = x - this.mWidth / 2;
+        let center1x = x - this.mWidth / 2 - (this.contentSizeMax * 2);
         let center1y = y - this.mHeight / 2;
         // arc(center1x,center1y,this.mWidth,this.mHeight,0,0.6 * PI, PIE)
         // fill(this.contentColor);
 
         // fill(this.bgColor);
-        let center2x = x + this.mWidth / 2;
+        let center2x = x + this.mWidth / 2 + (this.contentSizeMax * 2);
         let center2y = y - this.mHeight / 2;
         // arc(center2x,center2y,this.mWidth,this.mHeight,0.4*PI,PI, PIE)
         // fill(this.contentColor);
@@ -756,8 +756,8 @@ function ArrowPint() {
 
 function LinePint() {
 
-    this.mWidth = settings.f3_width;
-    this.mHeight = settings.f3_width * 3;
+    this.mWidth = settings.f3_height / 300 * 68;
+    this.mHeight = settings.f3_height;
     this.bgColor = settings.f3_bgColor;
     this.content = settings.f3_content;
     this.contentColor = settings.f3_contentColor;
@@ -774,8 +774,8 @@ function LinePint() {
     }
 
     this.update = function () {
-        this.mWidth = settings.f3_width;
-        this.mHeight = settings.f3_width * 3;
+        this.mWidth = settings.f3_height / 300 * 68;
+        this.mHeight = settings.f3_height;
         this.bgColor = settings.f3_bgColor;
         this.content = settings.f3_content;
         this.contentColor = settings.f3_contentColor;
@@ -799,7 +799,7 @@ function LinePint() {
         translate(innerWidth / 2, innerHeight / 2);
 
 
-        var pyl = this.mWidth + (this.mWidth / 3);
+        var pyl = this.mWidth + (this.mHeight / 300 * 48);
 
         var isInnerx = -(this.mWidth / 2) < realMouseX && realMouseX < this.mWidth / 2 && -(this.mHeight / 2) < realMouseY && realMouseY < this.mHeight / 2;
         print(isInnerx);
@@ -819,29 +819,31 @@ function LinePint() {
                         var qTotal = totalL * this.n;
                         var bh = juli / qTotal * totalChangeSize / 2
                         var size = this.contentSize + bh;
+                        var char = this.getZM();
                         if (this.rotateOpen) {
                             var angle = atan2(realMouseY - i, realMouseX - j);
-                            displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
-                            displayTextRotate(this.getZM(), this.contentColor, size, j - pyl, i, angle);
-                            displayTextRotate(this.getZM(), this.contentColor, size, j + pyl, i, angle);
+                            displayTextRotate(char, this.contentColor, size, j - pyl, i, angle);
+                            displayTextRotate(char, this.contentColor, size, j, i, angle);
+                            displayTextRotate(char, this.contentColor, size, j + pyl, i, angle);
                         } else {
-                            displayText(this.getZM(), this.contentColor, size, j, i);
-                            displayText(this.getZM(), this.contentColor, size, j-pyl, i);
-                            displayText(this.getZM(), this.contentColor, size, j+pyl, i);
+                            displayText(char, this.contentColor, size, j-pyl, i);
+                            displayText(char, this.contentColor, size, j, i);
+                            displayText(char, this.contentColor, size, j+pyl, i);
                         }
                     } else {
                         var hTotal = totalL * (1 - this.n);
                         var bh = (juli - (totalL * this.n)) / hTotal * totalChangeSize / 2 + (0.5 * totalChangeSize)
                         var size = this.contentSize + bh;
+                        var char = this.getZM();
                         if (this.rotateOpen) {
                             var angle = atan2(realMouseY - i, realMouseX - j);
-                            displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
-                            displayTextRotate(this.getZM(), this.contentColor, size, j - pyl, i, angle);
-                            displayTextRotate(this.getZM(), this.contentColor, size, j + pyl, i, angle);
+                            displayTextRotate(char, this.contentColor, size, j, i, angle);
+                            displayTextRotate(char, this.contentColor, size, j - pyl, i, angle);
+                            displayTextRotate(char, this.contentColor, size, j + pyl, i, angle);
                         } else {
-                            displayText(this.getZM(), this.contentColor, size, j, i);
-                            displayText(this.getZM(), this.contentColor, size, j-pyl, i);
-                            displayText(this.getZM(), this.contentColor, size, j+pyl, i);
+                            displayText(char, this.contentColor, size, j, i);
+                            displayText(char, this.contentColor, size, j-pyl, i);
+                            displayText(char, this.contentColor, size, j+pyl, i);
 
                         }
                     }
@@ -888,29 +890,31 @@ function LinePint() {
                         var qTotal = totalL * this.n;
                         var bh = juli / qTotal * totalChangeSize / 2
                         var size = this.contentSizeMax - bh;
+                        var char = this.getZM();
                         if (this.rotateOpen) {
                             var angle = atan2(realMouseY - i, realMouseX - j);
-                            displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
-                            displayTextRotate(this.getZM(), this.contentColor, size, j-pyl, i, angle);
-                            displayTextRotate(this.getZM(), this.contentColor, size, j+pyl, i, angle);
+                            displayTextRotate(char, this.contentColor, size, j, i, angle);
+                            displayTextRotate(char, this.contentColor, size, j-pyl, i, angle);
+                            displayTextRotate(char, this.contentColor, size, j+pyl, i, angle);
                         } else {
-                            displayText(this.getZM(), this.contentColor, size, j, i);
-                            displayText(this.getZM(), this.contentColor, size, j-pyl, i);
-                            displayText(this.getZM(), this.contentColor, size, j+pyl, i);
+                            displayText(char, this.contentColor, size, j, i);
+                            displayText(char, this.contentColor, size, j-pyl, i);
+                            displayText(char, this.contentColor, size, j+pyl, i);
                         }
                     } else {
                         var hTotal = totalL * (1 - this.n);
                         var bh = (juli - (totalL * this.n)) / hTotal * totalChangeSize / 2 + (0.5 * totalChangeSize)
                         var size = this.contentSizeMax - bh;
+                        var char = this.getZM();
                         if (this.rotateOpen) {
                             var angle = atan2(realMouseY - i, realMouseX - j);
-                            displayTextRotate(this.getZM(), this.contentColor, size, j, i, angle);
-                            displayTextRotate(this.getZM(), this.contentColor, size, j-pyl, i, angle);
-                            displayTextRotate(this.getZM(), this.contentColor, size, j+pyl, i, angle);
+                            displayTextRotate(char, this.contentColor, size, j, i, angle);
+                            displayTextRotate(char, this.contentColor, size, j-pyl, i, angle);
+                            displayTextRotate(char, this.contentColor, size, j+pyl, i, angle);
                         } else {
-                            displayText(this.getZM(), this.contentColor, size, j, i);
-                            displayText(this.getZM(), this.contentColor, size, j-pyl, i);
-                            displayText(this.getZM(), this.contentColor, size, j+pyl, i);
+                            displayText(char, this.contentColor, size, j, i);
+                            displayText(char, this.contentColor, size, j-pyl, i);
+                            displayText(char, this.contentColor, size, j+pyl, i);
                         }
                     }
                 }
@@ -1236,6 +1240,8 @@ function CirclePint() {
     }
 
     this.display = function () {
+        this.x = innerWidth / 2;
+        this.y = innerHeight / 2;
         background(this.bgColor);
         noStroke();
 
