@@ -75,7 +75,8 @@ let font;
 let c;
 
 function preload() {
-    font = loadFont('HelveticaNeueLTPro-Lt.otf')
+    // font = loadFont('HelveticaNeueLTPro-Lt.otf')
+    font = loadFont('HelveticaNeueLTPro-Md.otf')
 }
 
 function keyPressed() {
