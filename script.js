@@ -11,7 +11,7 @@ var settings = {
     animate: false,
     speed: 0.01,
     number: 1,
-    midu:1,
+    midu: 1,
     // fillColor: '#FFFFFF',
     bgColor: '#000000',
     content: 'SOBEY',
@@ -77,7 +77,7 @@ let font;
 let c;
 
 
-let lastFont =  "HelveticaNeueLTPro-Lt";
+let lastFont = "HelveticaNeueLTPro-Lt";
 
 function preload() {
     // font = loadFont('HelveticaNeueLTPro-Lt.otf')
@@ -122,7 +122,7 @@ function setup() {
 
 function draw() {
 
-    if(settings.font !== lastFont){
+    if (settings.font !== lastFont) {
         lastFont = settings.font;
         switch (settings.font) {
             case "HelveticaNeueLTPro-Lt":
@@ -131,9 +131,20 @@ function draw() {
             case "HelveticaNeueLTPro-Md":
                 font = loadFont('HelveticaNeueLTPro-Md.otf')
                 break;
-            case "OPPOSans-B-2":
+            case "OPPOSans-B":
                 font = loadFont('OPPOSans-B-2.ttf')
-
+                break;
+            case "OPPOSans-H":
+                font = loadFont('OPPOSans-H-2.ttf')
+                break;
+            case "OPPOSans-L":
+                font = loadFont('OPPOSans-L-2.ttf')
+                break;
+            case "OPPOSans-M":
+                font = loadFont('OPPOSans-M-2.ttf')
+                break;
+            case "OPPOSans-R":
+                font = loadFont('OPPOSans-R-2.ttf')
                 break;
         }
     }
@@ -192,7 +203,7 @@ function draw() {
 addEventListener('resize', () => {
     resizeCanvas(innerWidth, innerHeight)
 });
-gui.add(settings, "font", ["HelveticaNeueLTPro-Lt", "HelveticaNeueLTPro-Md", "OPPOSans-B-2"]).name("字体选择")
+gui.add(settings, "font", ["HelveticaNeueLTPro-Lt", "HelveticaNeueLTPro-Md", "OPPOSans-B", "OPPOSans-H", "OPPOSans-L", "OPPOSans-M", "OPPOSans-R"]).name("字体选择")
 gui.add(settings, "type", ["圆形", "矩形", "线", "箭头", "菱形"]).name("形状")
 let f1 = gui.addFolder("圆形参数");
 f1.add(settings, 'radius', 600, 1000).name("半径");
@@ -253,7 +264,6 @@ f5.add(settings, "f5_contentSizeMax", 16, 80).step(1).name("最大字体")
 f5.add(settings, "f5_factor", 0.1, 1).step(0.1).name("强度")
 f5.add(settings, "f5_midu", -20, 50).step(1).name("密度")
 f5.add(settings, "f5_rotateOpen", true).name("向心角度")
-
 
 
 function DiamondPint() {
@@ -388,9 +398,9 @@ function DiamondPint() {
             minY = y2 * (l - (this.radius / 2)) / l;
 
             fill(255);
-            for (let i = -(this.radius / 2) - this.contentSizeMax; i < (this.radius / 2); i += this.contentSizeMax  + this.midu) {
+            for (let i = -(this.radius / 2) - this.contentSizeMax; i < (this.radius / 2); i += this.contentSizeMax + this.midu) {
                 this.charIndex = 0;
-                for (let j = -(this.radius / 2) - this.contentSizeMax; j < (this.radius / 2); j += this.contentSizeMax  + this.midu) {
+                for (let j = -(this.radius / 2) - this.contentSizeMax; j < (this.radius / 2); j += this.contentSizeMax + this.midu) {
                     let d = dist(0, 0, j, i);
 
                     var juli1 = dist(j, i, center1X, center1Y);
@@ -563,7 +573,7 @@ function ArrowPint() {
         if (isInner) {
             for (let i = y - this.mHeight / 2; i <= y + this.mHeight / 2; i += (this.contentSizeMax) + this.midu) {
                 this.charIndex = 0;
-                for (let k = x - this.mWidth / 2; k <= x + this.mWidth / 2; k += (this.contentSizeMax)+ this.midu) {
+                for (let k = x - this.mWidth / 2; k <= x + this.mWidth / 2; k += (this.contentSizeMax) + this.midu) {
                     // let d = dist(this.x, this.y, k, i)
                     // if (d < this.radius / 2 + 5) {
                     // let size = dist(mouseX, mouseY, k, i);
@@ -651,9 +661,9 @@ function ArrowPint() {
             }
 
         } else {
-            for (let i = y - this.mHeight / 2; i <= y + this.mHeight / 2; i += (this.contentSizeMax)+ this.midu) {
+            for (let i = y - this.mHeight / 2; i <= y + this.mHeight / 2; i += (this.contentSizeMax) + this.midu) {
                 this.charIndex = 0;
-                for (let k = x - this.mWidth / 2; k <= x + this.mWidth / 2; k += (this.contentSizeMax)+ this.midu) {
+                for (let k = x - this.mWidth / 2; k <= x + this.mWidth / 2; k += (this.contentSizeMax) + this.midu) {
                     // let d = dist(this.x, this.y, k, i)
                     // if (d < this.radius / 2 + 5) {
                     // let size = dist(mouseX, mouseY, k, i);
@@ -850,9 +860,9 @@ function LinePint() {
                             displayTextRotate(char, this.contentColor, size, j, i, angle);
                             displayTextRotate(char, this.contentColor, size, j + pyl, i, angle);
                         } else {
-                            displayText(char, this.contentColor, size, j-pyl, i);
+                            displayText(char, this.contentColor, size, j - pyl, i);
                             displayText(char, this.contentColor, size, j, i);
-                            displayText(char, this.contentColor, size, j+pyl, i);
+                            displayText(char, this.contentColor, size, j + pyl, i);
                         }
                     } else {
                         var hTotal = totalL * (1 - this.n);
@@ -866,8 +876,8 @@ function LinePint() {
                             displayTextRotate(char, this.contentColor, size, j + pyl, i, angle);
                         } else {
                             displayText(char, this.contentColor, size, j, i);
-                            displayText(char, this.contentColor, size, j-pyl, i);
-                            displayText(char, this.contentColor, size, j+pyl, i);
+                            displayText(char, this.contentColor, size, j - pyl, i);
+                            displayText(char, this.contentColor, size, j + pyl, i);
 
                         }
                     }
@@ -889,10 +899,10 @@ function LinePint() {
 
                     var dx
                     if (realMouseX < -this.mWidth / 2) {
-                         dx = -this.mWidth / 2 * bl;
+                        dx = -this.mWidth / 2 * bl;
                     } else if (realMouseX >= this.mWidth / 2) {
-                         dx = this.mWidth / 2 * bl;
-                    }else{
+                        dx = this.mWidth / 2 * bl;
+                    } else {
                         dx = Math.abs(realMouseX - j);
                     }
 
@@ -918,12 +928,12 @@ function LinePint() {
                         if (this.rotateOpen) {
                             var angle = atan2(realMouseY - i, realMouseX - j);
                             displayTextRotate(char, this.contentColor, size, j, i, angle);
-                            displayTextRotate(char, this.contentColor, size, j-pyl, i, angle);
-                            displayTextRotate(char, this.contentColor, size, j+pyl, i, angle);
+                            displayTextRotate(char, this.contentColor, size, j - pyl, i, angle);
+                            displayTextRotate(char, this.contentColor, size, j + pyl, i, angle);
                         } else {
                             displayText(char, this.contentColor, size, j, i);
-                            displayText(char, this.contentColor, size, j-pyl, i);
-                            displayText(char, this.contentColor, size, j+pyl, i);
+                            displayText(char, this.contentColor, size, j - pyl, i);
+                            displayText(char, this.contentColor, size, j + pyl, i);
                         }
                     } else {
                         var hTotal = totalL * (1 - this.n);
@@ -933,12 +943,12 @@ function LinePint() {
                         if (this.rotateOpen) {
                             var angle = atan2(realMouseY - i, realMouseX - j);
                             displayTextRotate(char, this.contentColor, size, j, i, angle);
-                            displayTextRotate(char, this.contentColor, size, j-pyl, i, angle);
-                            displayTextRotate(char, this.contentColor, size, j+pyl, i, angle);
+                            displayTextRotate(char, this.contentColor, size, j - pyl, i, angle);
+                            displayTextRotate(char, this.contentColor, size, j + pyl, i, angle);
                         } else {
                             displayText(char, this.contentColor, size, j, i);
-                            displayText(char, this.contentColor, size, j-pyl, i);
-                            displayText(char, this.contentColor, size, j+pyl, i);
+                            displayText(char, this.contentColor, size, j - pyl, i);
+                            displayText(char, this.contentColor, size, j + pyl, i);
                         }
                     }
                 }
@@ -1121,7 +1131,7 @@ function RectanglePint() {
                     var xD = 0;
                     var yD = 0;
 
-                    var  juli = 0;
+                    var juli = 0;
 
                     if (Math.abs(realMouseX) > Math.abs(realMouseY)) {
                         var xbiy = Math.abs(realMouseY / realMouseX);
