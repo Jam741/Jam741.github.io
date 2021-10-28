@@ -2,6 +2,8 @@ console.clear()
 
 var gui = new dat.GUI();
 var settings = {
+
+    font: "HelveticaNeueLTPro-Lt",
     type: "圆形",
     totalPoints: 500,
     factor: 0.5,
@@ -74,9 +76,13 @@ let circlePrint, rectanglePint, linePint, arrowPint, diamondPint;
 let font;
 let c;
 
+
+let lastFont =  "HelveticaNeueLTPro-Lt";
+
 function preload() {
     // font = loadFont('HelveticaNeueLTPro-Lt.otf')
     font = loadFont('HelveticaNeueLTPro-Md.otf')
+    font = loadFont('OPPOSans-B-2.ttf')
 }
 
 function keyPressed() {
@@ -115,6 +121,23 @@ function setup() {
 }
 
 function draw() {
+
+    if(settings.font !== lastFont){
+        lastFont = settings.font;
+        switch (settings.font) {
+            case "HelveticaNeueLTPro-Lt":
+                font = loadFont('HelveticaNeueLTPro-Lt.otf')
+                break;
+            case "HelveticaNeueLTPro-Md":
+                font = loadFont('HelveticaNeueLTPro-Md.otf')
+                break;
+            case "OPPOSans-B-2":
+                font = loadFont('OPPOSans-B-2.ttf')
+
+                break;
+        }
+    }
+
     switch (settings.type) {
         case "圆形":
             f1.open();
@@ -169,7 +192,7 @@ function draw() {
 addEventListener('resize', () => {
     resizeCanvas(innerWidth, innerHeight)
 });
-
+gui.add(settings, "font", ["HelveticaNeueLTPro-Lt", "HelveticaNeueLTPro-Md", "OPPOSans-B-2"]).name("字体选择")
 gui.add(settings, "type", ["圆形", "矩形", "线", "箭头", "菱形"]).name("形状")
 let f1 = gui.addFolder("圆形参数");
 f1.add(settings, 'radius', 600, 1000).name("半径");
