@@ -32246,7 +32246,7 @@ $1(a){var s=$.cC
 s=(s==null?$.cC=A.fA(self.window.flutterConfiguration):s).b
 if(s==null)s=null
 else{s=s.canvasKitBaseUrl
-if(s==null)s=null}return(s==null?"https://www.gstatic.com/flutter-canvaskit/0545f8705df301877d787107bac1a6e9fc9ee1ad/":s)+a},
+if(s==null)s=null}return(s==null?"canvaskit/":s)+a},
 $S:122}
 A.atk.prototype={
 $1(a){this.a.remove()
@@ -32900,7 +32900,7 @@ for(i=k.b,h=i.length,g=0;g<i.length;i.length===h||(0,A.J)(i),++g){f=i[g]
 e=$.rm
 e.toString
 d=f.a
-a6.push(p.ou(d,e.qw(d),j))}}if(!m)a6.push(p.ou("Roboto","https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Me5WZLCzYlKw.ttf","Roboto"))
+a6.push(p.ou(d,e.qw(d),j))}}if(!m)a6.push(p.ou("Roboto","assets/fonts/KFOmCnqEu92Fr1Me5WZLCzYlKw.ttf","Roboto"))
 c=A.F(t.N,t.FK)
 b=A.b([],t.Co)
 a7=J
@@ -34693,7 +34693,7 @@ var $async$$0=A.Z(function(a,b){if(a===1){o=b
 s=p}while(true)switch(s){case 0:p=4
 k=n.b
 j=k.b
-m="https://fonts.gstatic.com/s/"+j
+m="assets/fonts/"+j
 s=7
 return A.a3(n.a.a.a.A0(k.a,m),$async$$0)
 case 7:n.c.push(j)
