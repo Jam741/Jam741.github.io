@@ -1,0 +1,230 @@
+body, html, table, video {
+    width: 100%
+}
+
+img, table {
+    max-width: 100%
+}
+
+a, img {
+    -webkit-touch-callout: none
+}
+
+html {
+    font-size: 100%;
+    -webkit-text-size-adjust: 100%
+}
+
+a, b, body, dd, div, dl, dt, footer, h1, h2, h3, h4, h5, h6, header, html, i, li, p, section {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box
+}
+
+h1, h2, h3, h4, h5, h6, p {
+    padding-bottom: .2rem;
+    word-wrap: break-word;
+    word-break: normal
+}
+
+body, html {
+    min-height: 100%
+}
+
+body {
+    font-family: "Helvetica Neue", Helvetica, "Heiti SC", "Droid Sans Fallback", sans-self;
+    line-height: 1.4;
+    font-size: .75rem;
+    background-color: #fff;
+    padding: 1rem .6rem 1.4rem .8rem;
+    color: #353535
+}
+
+ol, ul {
+    display: block;
+    list-style-type: disc;
+    -webkit-margin-before: .5em;
+    margin-block-start: .5em;
+    -webkit-margin-after: .5em;
+    margin-block-end: .5em;
+    -webkit-margin-start: 0;
+    margin-inline-start: 0;
+    -webkit-margin-end: 0;
+    margin-inline-end: 0;
+    -webkit-padding-start: 1em;
+    padding-inline-start: 1em
+}
+
+ol {
+    list-style-type: decimal
+}
+
+a {
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    word-wrap: break-word;
+    word-break: normal
+}
+
+img {
+    vertical-align: middle;
+    width: auto;
+    font-size: 0
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: .8rem;
+    color: #000;
+    padding-top: .4rem
+}
+
+h1 {
+    font-size: 1.2rem
+}
+
+h2 {
+    font-size: 1.1rem
+}
+
+h3 {
+    font-size: 1rem
+}
+
+h4 {
+    font-size: .85rem
+}
+
+p {
+    padding-top: .2rem
+}
+
+.image {
+    display: inline-block
+}
+
+table {
+    margin: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
+    word-wrap: break-word;
+    word-break: normal;
+    border-left: solid 1px #e1e1e1;
+    border-top: solid 1px #e1e1e1
+}
+
+table td {
+    word-break: break-all;
+    word-wrap: break-word;
+    border-right: solid 1px #e1e1e1;
+    border-bottom: solid 1px #e1e1e1;
+    padding: .2rem
+}
+
+figure {
+    margin: .2rem 0;
+    word-wrap: break-word;
+    word-break: normal
+}
+
+@media screen and (min-width: 360px) and (max-width: 374px) {
+    html {
+        font-size: 110%
+    }
+}
+
+@media screen and (min-width: 375px) and (max-width: 383px) {
+    html {
+        font-size: 112.5%
+    }
+}
+
+@media screen and (min-width: 384px) and (max-width: 399px) {
+    html {
+        font-size: 115%
+    }
+}
+
+@media screen and (min-width: 400px) and (max-width: 410px) {
+    html {
+        font-size: 120%
+    }
+}
+
+@media screen and (min-width: 411px) and (max-width: 423px) {
+    html {
+        font-size: 125%
+    }
+}
+
+@media screen and (min-width: 424px) and (max-width: 479px) {
+    html {
+        font-size: 128%
+    }
+}
+
+@media screen and (min-width: 480px) and (max-width: 539px) {
+    html {
+        font-size: 132%
+    }
+}
+
+@media screen and (min-width: 540px) and (max-width: 599px) {
+    html {
+        font-size: 140%
+    }
+}
+
+@media screen and (min-width: 600px) and (max-width: 639px) {
+    html {
+        font-size: 160%
+    }
+}
+
+@media screen and (min-width: 640px) and (max-width: 719px) {
+    html {
+        font-size: 180%
+    }
+}
+
+@media screen and (min-width: 720px) and (max-width: 767px) {
+    html {
+        font-size: 190%
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 799px) {
+    html {
+        font-size: 200%
+    }
+}
+
+@media screen and (min-width: 800px) and (max-width: 959px) {
+    html {
+        font-size: 220%
+    }
+}
+
+@media screen and (min-width: 960px) and (max-width: 1023px) {
+    html {
+        font-size: 230%
+    }
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1079px) {
+    html {
+        font-size: 240%
+    }
+}
+
+@media screen and (min-width: 1080px) and (max-width: 1279px) {
+    html {
+        font-size: 250%
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    html {
+        font-size: 260%
+    }
+}
